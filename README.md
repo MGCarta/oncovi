@@ -72,7 +72,7 @@ A test data is available under:
 cd /path/to/02_VEP_based_pipeline.py
 
 # Run the functional annotation
-python -i /testdata/SOP_table_union.txt -r /resources/VEP
+python -i /testdata/SOP_table_union.txt
 ```
 
 #### Run OncoVI
@@ -82,7 +82,7 @@ python -i /testdata/SOP_table_union.txt -r /resources/VEP
 cd /path/to/03_OncoVI_SOP.py
 
 # Run OncoVI
-python 03_OncoVI_SOP.py -i /testdata/VEP/SOP_table_union_prediction.xlsx -r /resources/OncoVI
+python 03_OncoVI_SOP.py -i /testdata/VEP/SOP_table_union_prediction.xlsx -r /resources
 ```
 
 
