@@ -4,7 +4,7 @@ OncoVI is a fully-automated Python implementation of the oncogenicity guidelines
 2. Collects biological evidences from the implemented publicly available resources
 3. Provides a classification of oncogenicity based on the oncogenicity guidelines [].
 
-Reference-style: 
+Workflow of OncoVI: 
 ![alt text][logo]
 
 [logo]: https://github.com/MGCarta/oncovi/blob/main/Figure1.PNG "Logo Title Text 2"
