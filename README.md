@@ -20,6 +20,10 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 * pandas
 * subprocess
 
+### COSMIC resources
+Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic) resources utilised by OncoVI cannot be uploaded on the GitHub repo. However, here is a user-friendly guide on how to download and handle cosmic data to make it usable by OncoVI.
+
+
 ## Get started
 Clone the GitHub repository:
 ```rb
