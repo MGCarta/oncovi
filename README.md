@@ -40,14 +40,24 @@ A test input data is available under:
 # /testdata/SOP_table_union.txt
 ```
 
-#### Performs functional annotation with VEP
+#### Perform functional annotation with VEP
 
 ```rb
 # Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
 cd /path/to/02_VEP_based_pipeline.py
 
 # Run the functional annotation
-python -i /testdata/SOP_table_union.txt -r /resources/VEP_resources
+python -i /testdata/SOP_table_union.txt -r /resources/VEP
+```
+
+#### Run OncoVI
+
+```rb
+# Navigate to the directory in which the python script 03_OncoVI_SOP.py is located
+cd /path/to/03_OncoVI_SOP.py
+
+# Run OncoVI
+python 03_OncoVI_SOP.py -i /testdata/VEP/SOP_table_union_prediction.xlsx -r /resources/OncoVI
 ```
 
 
