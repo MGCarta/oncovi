@@ -40,6 +40,17 @@ A test input data is available under:
 # /testdata/SOP_table_union.txt
 ```
 
+#### Performs functional annotation with VEP
+
+```rb
+# Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
+cd /path/to/02_VEP_based_pipeline.py
+
+# Run the functional annotation
+python -i /testdata/SOP_table_union.txt -r /resources/VEP_resources
+```
+
+
 ## License
 OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user, who should also comply with licences of the resources utilised.
 
