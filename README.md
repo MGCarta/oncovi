@@ -27,7 +27,7 @@ Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download
 
 1. [All Data CMC](https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v100/alldata-cmc) was first downloaded;
 2. The data set was reduced to columns: GENE_NAME, MUTATION CDS, MUTATION AA, COSMIC_SAMPLE_MUTATED, Mutation genome position GRCh38;
-3. The reduced version of the data set was read and converted to a dictionary through the python script ```rb # /src/prepare_resources.py ```
+3. The reduced version of the data set was read and converted to a dictionary through the python script ``` # /src/prepare_resources.py ```
 
 
 ## Get started
