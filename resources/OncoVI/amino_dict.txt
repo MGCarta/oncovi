@@ -1,0 +1,1 @@
+{"Ser": "S", "Arg": "R", "Leu": "L", "Pro": "P", "Thr": "T", "Ala": "A", "Val": "V", "Gly": "G", "Ile": "I", "Phe": "F", "Tyr": "Y", "Cys": "C", "His": "H", "Gln": "Q", "Asn": "N", "Lys": "K", "Asp": "D", "Glu": "E", "Met": "M", "Trp": "W", "Ter": "*"}
