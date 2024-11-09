@@ -33,6 +33,12 @@ conda activate oncovi
 ```
 
 ## Prepare your variants
+Variants in text and variant call format (VCF) are both accepted by [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html). Please refere to VEP´s [official documentation](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#input) for a detailed description on input formats.
+A test input data is available under:
+
+```rb
+# /testdata/SOP_table_union.txt
+```
 
 ## License
 OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user, who should also comply with licences of the resources utilised.
