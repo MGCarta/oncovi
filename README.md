@@ -51,11 +51,11 @@ Clone the GitHub repository:
 ```rb
 git clone https://github.com/MGCarta/oncovi.git
 ```
-```
+```rb
 # Create the conda environment oncovi
 conda env create -f /path/to/OncoVIenvFile.yml
 ```
-```
+```rb
 # Activate the conda environment
 conda activate oncovi
 ```
