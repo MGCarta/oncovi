@@ -50,10 +50,12 @@ Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) res
 Clone the GitHub repository:
 ```rb
 git clone https://github.com/MGCarta/oncovi.git
-
+```
+```
 # Create the conda environment oncovi
 conda env create -f /path/to/OncoVIenvFile.yml
-
+```
+```
 # Activate the conda environment
 conda activate oncovi
 ```
