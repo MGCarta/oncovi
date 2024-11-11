@@ -22,7 +22,7 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 * subprocess
 
 ### COSMIC resources
-Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic) resources utilised by OncoVI cannot be uploaded on the GitHub repo. However, here is a user-friendly guide on how to download and handle cosmic data to make it usable by OncoVI.
+Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic) resources utilised by OncoVI cannot be uploaded on the GitHub repo. Here, a user-friendly guide on how to download and handle cosmic data to make it usable by OncoVI.
 
 #### Cancer Mutation Census 
 
@@ -39,7 +39,7 @@ Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download
 4. The resulted dictionary is saved under the name ```cosmic_all_dictionary.txt``` and must be provided to OncoVI for the evaluation of the oncogenicity guidelimes. 
 
 ### ClinVar resources
-Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP cannot be uploaded on the GitHub repo. However, here is a user-friendly guide on how to download and handle ClinVar data to make it usable by the functional annotation STEP.
+Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP cannot be uploaded on the GitHub repo. Here, a user-friendly guide on how to download and handle ClinVar data to make it usable by the functional annotation STEP.
 
 1. The ```variant_summary.txt.gz``` file was downloaded from the [ftp site](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/);
 2. The data set was reduced to columns: GeneSymbol, ClinicalSignificance, Chromosome, Start, VariationID, ReferenceAlleleVCF, AlternateAlleleVCF, ReviewStatus, NumberSubmitters;
