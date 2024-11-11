@@ -63,9 +63,16 @@ conda activate oncovi
 ```
 ## Set up VEP
 ```rb
-# To run the installer (v111) available in the conda environment
-vep install
+# To run the installer (v. 111) available in the conda environment
+vep_install --NO_HTSLIB -c '/path/to/.vep' -r '/path/to/.vep/Plugins/'
 ```
+Then:
+  * select homo_sapiens_refseq_vep_111_GRCh38.tar.gz as cache
+  * homo_sapiens_vep_111_GRCh38.tar.gz as reference genome
+  * install all Plugins
+
+### dbNSFP plugin
+The dbNSFP plugin is used during the the functional annotation STEP and by OncoVI for the evaluation of the oncogenicity guidelines. Detailed information on how to set upt the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp).  
 
 ## Prepare your variants
 Variants in text and variant call format (VCF) are both accepted by [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html). Please refere to VEP´s [official documentation](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#input) for a detailed description of input formats.
