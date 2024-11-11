@@ -6,6 +6,8 @@ Starting from the genomic location of the variants OncoVI:
 2. Collects biological evidences from the implemented publicly available resources
 3. Provides a classification of oncogenicity based on the oncogenicity guidelines.
 
+More detailed information on the resources used by OncoVI and how the oncogenicity guidelines were implemented can be found in our pre-print [here](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1).
+
 Workflow of OncoVI: 
 ![alt text][logo]
 
