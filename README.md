@@ -26,24 +26,24 @@ Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download
 
 #### Cancer Mutation Census 
 
-1. [All Data CMC](https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v100/alldata-cmc) for genome GRCh38 was first downloaded;
-2. The data set was reduced to columns: GENE_NAME, MUTATION CDS, MUTATION AA, COSMIC_SAMPLE_MUTATED, Mutation genome position GRCh38;
-3. The reduced version of the data set was converted to a dictionary through the python script ``` /src/prepare_resources.py ```;
+1. First, [All Data CMC](https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v100/alldata-cmc) for genome GRCh38 was downloaded;
+2. Then, the data set was reduced to columns: ```GENE_NAME```, ```MUTATION CDS```, ```MUTATION AA```, ```COSMIC_SAMPLE_MUTATED```, ```Mutation genome position GRCh38```;
+3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_resources.py ```;
 4. The resulted dictionary is saved under the name ```cosmic_hgvsg_dictionary.txt``` and must be provided to OncoVI for the evaluation of the oncogenicity guidelines.
 
 #### Census Genes Mutations 
 
-1. [Census Genes Mutations](https://cancer.sanger.ac.uk/cosmic/download/cosmic/v100/mutantcensus) for genome GRCh38 was first downloaded;
-2. The data set was reduced to columns: GENE_SYMBOL, MUTATION_CDS, MUTATION_AA, and HGVSG;
-3. The reduced version of the data set was converted to a dictionary through the python script ``` /src/prepare_resources.py ```;
+1. First, [Census Genes Mutations](https://cancer.sanger.ac.uk/cosmic/download/cosmic/v100/mutantcensus) for genome GRCh38 was downloaded;
+2. Then, the data set was reduced to columns: ```GENE_SYMBOL```, ```MUTATION_CDS```, ```MUTATION_AA```, and ```HGVSG```;
+3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_resources.py ```;
 4. The resulted dictionary is saved under the name ```cosmic_all_dictionary.txt``` and must be provided to OncoVI for the evaluation of the oncogenicity guidelimes. 
 
 ### ClinVar resources
 Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP cannot be uploaded on the GitHub repo. Here, a user-friendly guide on how to download and handle ClinVar data to make it usable by the functional annotation STEP.
 
-1. The ```variant_summary.txt.gz``` file was downloaded from the [ftp site](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/);
-2. The data set was reduced to columns: GeneSymbol, ClinicalSignificance, Chromosome, Start, VariationID, ReferenceAlleleVCF, AlternateAlleleVCF, ReviewStatus, NumberSubmitters;
-3. The reduced version of the data set was converted to a dictionary through the python script ``` /src/create_clinvar_dict.py ```;
+1. First, ```variant_summary.txt.gz``` was downloaded from the [ftp site](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/);
+2. Then, the data set was reduced to columns: ```GeneSymbol```, ```ClinicalSignificance```, ```Chromosome```, ```Start```, ```VariationID```, ```ReferenceAlleleVCF```, ```AlternateAlleleVCF```, ```ReviewStatus```, ```NumberSubmitters```;
+3. The reduced data set was converted into a dictionary with the python script ``` /src/create_clinvar_dict.py ```;
 4. The resulted dictionary is saved under the name ```clinvar_all_dictionary.txt``` and must be provided to the functional annotation STEP. 
 
 ## Get started
