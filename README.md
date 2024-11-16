@@ -90,6 +90,7 @@ A test data is available under:
 
 ```rb
 # Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
+
 # Run the functional annotation
 python 02_VEP_based_pipeline.py -i /path/to/oncovi/testdata/SOP_table_union.txt
 ```
@@ -98,10 +99,9 @@ python 02_VEP_based_pipeline.py -i /path/to/oncovi/testdata/SOP_table_union.txt
 
 ```rb
 # Navigate to the directory in which the python script 03_OncoVI_SOP.py is located
-cd /path/to/03_OncoVI_SOP.py
 
 # Run OncoVI
-python 03_OncoVI_SOP.py -i /testdata/VEP/SOP_table_union_prediction.xlsx -r /resources
+python 03_OncoVI_SOP.py -i /testdata/SOP_table_union_prediction.xlsx -r /resources
 ```
 
 
