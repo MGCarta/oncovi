@@ -29,16 +29,18 @@ Due to size constraints the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download
 #### Cancer Mutation Census 
 
 1. First, [All Data CMC](https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v100/alldata-cmc) for genome GRCh38 was downloaded;
-2. Then, the data set was reduced to columns: ```GENE_NAME```, ```MUTATION CDS```, ```MUTATION AA```, ```COSMIC_SAMPLE_MUTATED```, ```Mutation genome position GRCh38```;
-3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_resources.py ```;
-4. The resulted dictionary is saved under the name ```cosmic_hgvsg_dictionary.txt``` and must be provided to OncoVI for the evaluation of the oncogenicity guidelines.
+2. Then, the data set was reduced to columns: ```GENE_NAME```, ```Mutation CDS```, ```Mutation AA```, ```AA_MUT_START```, ```Mutation genome position GRCh38```, ```COSMIC_SAMPLE_MUTATED```;
+3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_cosmic_resources.py ```;
+4. The resulted dictionary is saved under the name ```cosmic_all_dictionary.txt```;
+5. The path to the resulted dictionary must be provided to the python script ```03_OncoVI_SOP.py```.
 
 #### Census Genes Mutations 
 
 1. First, [Census Genes Mutations](https://cancer.sanger.ac.uk/cosmic/download/cosmic/v100/mutantcensus) for genome GRCh38 was downloaded;
 2. Then, the data set was reduced to columns: ```GENE_SYMBOL```, ```MUTATION_CDS```, ```MUTATION_AA```, and ```HGVSG```;
-3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_resources.py ```;
-4. The resulted dictionary is saved under the name ```cosmic_all_dictionary.txt``` and must be provided to OncoVI for the evaluation of the oncogenicity guidelimes. 
+3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_cosmic_resources.py ```;
+4. The resulted dictionary is saved under the name ```cosmic_hgvsg_dictionary.txt```;
+5. The path to the resulted dictionary must be provided to the python script ```03_OncoVI_SOP.py```. 
 
 ### ClinVar resources
 Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP cannot be uploaded on the GitHub repo. Here, a user-friendly guide on how to download and handle ClinVar data to make it usable by the functional annotation STEP.
