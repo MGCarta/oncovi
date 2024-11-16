@@ -1,10 +1,10 @@
 # Oncogenicity Variant Interpreter (OncoVI)
-OncoVI is a fully-automated Python implementation of the [oncogenicity guidelines](https://pubmed.ncbi.nlm.nih.gov/35101336/) published in 2022 by Horak et al. 
+OncoVI is a fully-automated Python implementation of the [oncogenicity guidelines](https://pubmed.ncbi.nlm.nih.gov/35101336/) published by Horak et al. in 2022. 
 
 Starting from the genomic location of the variants OncoVI:
-1. Performs functional annotation based on the [Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) from Ensembl 
-2. Collects biological evidences from the implemented publicly available resources
-3. Provides a classification of oncogenicity based on the oncogenicity guidelines.
+1. Performs functional annotation based on the [Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) from Ensembl;
+2. Collects biological evidences from the implemented publicly available resources;
+3. Provides a classification of oncogenicity based on the point-based system, oncogenicity guidelines.
 
 More detailed information on the resources used by OncoVI and how the oncogenicity guidelines were implemented can be found in our pre-print [here](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1).
 
@@ -46,7 +46,8 @@ Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) res
 1. First, ```variant_summary.txt.gz``` was downloaded from the [ftp site](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/);
 2. Then, the data set was reduced to columns: ```GeneSymbol```, ```ClinicalSignificance```, ```Chromosome```, ```Start```, ```VariationID```, ```ReferenceAlleleVCF```, ```AlternateAlleleVCF```, ```ReviewStatus```, ```NumberSubmitters```;
 3. The reduced data set was converted into a dictionary with the python script ``` /src/create_clinvar_dict.py ```;
-4. The resulted dictionary is saved under the name ```clinvar_all_dictionary.txt``` and must be provided to the functional annotation STEP. 
+4. The resulted dictionary is saved under the name ```clinvar_all_dictionary.txt```;
+5. The path to the ClinVar dictionary must be provided to the python script ```02_VEP_based_pipeline.py```. 
 
 ## Get started
 Clone the GitHub repository:
@@ -72,7 +73,10 @@ Then:
   * install all Plugins
 
 ### dbNSFP plugin
-The dbNSFP plugin is used during the the functional annotation STEP and by OncoVI for the evaluation of the oncogenicity guidelines. Detailed information on how to set upt the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp).  
+The dbNSFP plugin is used during the the functional annotation STEP by OncoVI for the evaluation of the oncogenicity guidelines. Detailed information on how to set upt the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp). The dbNSFP Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.
+
+### spliceAI plugin
+The spliceAI plugin is used during the the functional annotation STEP by OncoVI for the evaluation of the oncogenicity guidelines. Detailed information on how to set upt the spliceAI plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#spliceAI). The spliceAI Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.  
 
 ## Prepare your variants
 Variants in text and variant call format (VCF) are both accepted by [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html). Please refere to VEP´s [official documentation](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#input) for a detailed description of input formats.
@@ -86,10 +90,8 @@ A test data is available under:
 
 ```rb
 # Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
-cd /path/to/02_VEP_based_pipeline.py
-
 # Run the functional annotation
-python -i /testdata/SOP_table_union.txt
+python 02_VEP_based_pipeline.py -i /path/to/oncovi/testdata/SOP_table_union.txt
 ```
 
 #### Run OncoVI
