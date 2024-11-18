@@ -108,6 +108,8 @@ python 03_OncoVI_SOP.py
 
 
 ## License
+The License file applies to all files within this repository.
+
 OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user, who should also comply with licences of the resources utilised.
 
 ## References
