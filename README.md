@@ -1,7 +1,7 @@
 # Oncogenicity Variant Interpreter (OncoVI)
 OncoVI is a fully-automated Python implementation of the [oncogenicity guidelines](https://pubmed.ncbi.nlm.nih.gov/35101336/) by Horak et al. (Genetics in Medicine, 2022). 
 
-***** <ins>An enhanced version of OncoVI will be released in the coming days.</ins> *****
+***** <ins>UPDATE(17.01.2025):An enhanced version of OncoVI will be released in the coming days.</ins> *****
 
 Starting from the genomic location of the variants, OncoVI:
 1. performs functional annotation based on the [Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) from Ensembl;
