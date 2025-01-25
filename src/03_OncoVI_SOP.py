@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jun 18 10:27:14 2024
+Created on Fri Jan 24 10:27:14 2025
 
 
     The script applies the oncogenicity guidelines implemented in OncoVI to the
@@ -24,8 +24,8 @@ import pandas as pd
 # Computes grantham score
 def compute_grantham_score(ref_amino_acid, alt_amino_acid, original_alt_amino):
     
-    # ref_amino_acid is the reference AA of the variant evaluated as 
-    # well as the AA of the variant we known to be oncogenic (because in CGI)
+    # ref_amino_acid is the reference AA of the variant evaluated and 
+    # of the variant we know to be oncogenic (because in CGI)
     
     # alt_amino_acid is the alternate AA of the variant evaluated
     
@@ -37,7 +37,6 @@ def compute_grantham_score(ref_amino_acid, alt_amino_acid, original_alt_amino):
     
     # grantham score for the variant evaluated 
     grantham_score_new = grantham_table.loc[ref_amino_acid, alt_amino_acid]
-
     return grantham_score_orig, grantham_score_new
         
 ## Input data 
@@ -45,7 +44,7 @@ def compute_grantham_score(ref_amino_acid, alt_amino_acid, original_alt_amino):
 input_data_dir = "/path/to/oncovi/testdata"
 
 # -------------------------------------------------------------------------- ##
- 
+
 ## Path for the output 
 output_dir = os.path.join(input_data_dir, "OncoVI_eval")
 
@@ -72,6 +71,7 @@ tsg = pd.read_csv(os.path.join(resources_dir, "tsg_list.txt"),
                   header = None, 
                   sep='\t',
                   names = ["Gene"])
+
 tsg_list = tsg.Gene.tolist()
 
 # Oncogenes list in Cancer Gene Census and OncoKB
@@ -117,6 +117,7 @@ ClinicalSignificance = pd.read_csv(os.path.join(resources_dir, "os2_manually_sel
                                    header = None, 
                                    sep='\t',
                                    names = ["value"])
+
 ClinicalSignificance_list = ClinicalSignificance.value.tolist()
     
 # COSMIC dictionary for entries without HGVSp but with HGVSG identifier
@@ -133,7 +134,7 @@ print("\n")
 print('#---------------------------------------------------------------------#')
 print('#                ONCOGENICITY GUIDELINES INTERPRETATION               #')
 print('#---------------------------------------------------------------------#\n')
-print("\n")    
+print("\n") 
 
 for filename in os.listdir(input_data_dir):
         
@@ -170,7 +171,7 @@ for filename in os.listdir(input_data_dir):
                                     "OP1_p", "OP2_p", "OP3_p", "OP4_p",
                                     "SBVS1_p", "SBS1_p", "SBS2_p", "SBP1_p", "SBP2_p"]
         
-        # Data frame of points associated to triggered criteria
+        # Data frame of points associated to the triggered criteria
         points_df = pd.DataFrame(columns=criteria_colnames_points)
         
         # Dictionary of quantitative and qualitative interpretation
@@ -599,7 +600,7 @@ for filename in os.listdir(input_data_dir):
                 # ref and alt AA in single letters 
                 ref_amino_acid = alt_amino_acid = ""
                 
-                amino_Acid_position = ""
+                amino_acid_position = ""
                 
                 prot_change = ""
                 
@@ -611,8 +612,23 @@ for filename in os.listdir(input_data_dir):
             else:
                 
                 var_identifier = gene + ":" + str(pos) + ref_allele + ">" + alt_allele
-                #print(var_identifier)
-                ## var_id is not defined in these cases !!!!
+                
+                ref = ""
+                alt = ""
+                
+                # ref and alt AA in single letters
+                ref_amino_acid = ""
+                alt_amino_acid = ""
+                
+                amino_acid_position = ""
+                
+                prot_change = ""
+                        
+                ref_amino_acid_and_position = ""
+                
+                # to access CGI database 
+                var_id = gene + ":" + "g." + str(pos) + ref_allele + ">" + alt_allele
+            
                 
             # -------------------------------------------------------------------------- ##
             
@@ -887,7 +903,7 @@ for filename in os.listdir(input_data_dir):
                         gene_records_inframe_indel_dict = in_frame_indel_dict[gene]  
                         
                         for key in gene_records_inframe_indel_dict.keys():
-                            
+                                                        
                             if not '-' in key:
                                 
                                 if amino_acid_position == key:
@@ -897,7 +913,7 @@ for filename in os.listdir(input_data_dir):
                                     if len(res_variant_inframe_indel) == 0:
                                         
                                         # the residue is not in cancerhotspots
-                                        res_cancerhotspots = "False"
+                                        res_cancerhotspots = "False" 
                                             
                                         criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                         points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -907,7 +923,9 @@ for filename in os.listdir(input_data_dir):
                                         # Check if the requirements from the guidelines are satisfied
                                         # by cancerhotspots records
                                         if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                    
+                                            
+                                            res_cancerhotspots = "True"
+                                            
                                             criteria_df.loc[var_identifier, 'OS3'] = 'yes'
                                             points_df.loc[var_identifier, 'OS3_p'] = 4
                                             break;
@@ -915,13 +933,21 @@ for filename in os.listdir(input_data_dir):
                                         else:
                                             
                                             # the residue is in cancerhotspots but not 
-                                            # satisfying OS3 requirements 
+                                            # satisfying OS3 requirements. This avoid 
+                                            # verifying the presence of the variant in 
+                                            # COSMIC, given that we give priority to
+                                            # cancerhotspots.org
                                             res_cancerhotspots = "True"
                                             
                                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                             points_df.loc[var_identifier, 'OS3_p'] = 0
                                 
                                 else:
+                                    
+                                    # the residue is not in cancerhotspots and 
+                                    # we want to check the presence of the 
+                                    # variant in COSMIC
+                                    res_cancerhotspots = "False"
                                     
                                     criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                     points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -942,7 +968,7 @@ for filename in os.listdir(input_data_dir):
                                         if len(res_variant_inframe_indel) == 0:
                                             
                                             # the residue is not in cancerhotspots
-                                            res_cancerhotspots = "False"
+                                            res_cancerhotspots = "False" 
                                                 
                                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                             points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -952,20 +978,31 @@ for filename in os.listdir(input_data_dir):
                                            # Check if the requirements from the guidelines are satisfied
                                            # by cancerhotspots records
                                            if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                       
+                                               
+                                               # the residue is in cancerhotspots
+                                               res_cancerhotspots = "True"
+                                               
                                                criteria_df.loc[var_identifier, 'OS3'] = 'yes'
                                                points_df.loc[var_identifier, 'OS3_p'] = 4
+                                               break;
                                                    
                                            else:
                                                
                                                # the residue is in cancerhotspots but not 
-                                               # satisfying OS3 requirements 
-                                               res_cancerhotspots = "True"
+                                               # satisfying OS3 requirements. This avoid 
+                                               # verifying the presence of the variant in 
+                                               # COSMIC, given that we give priority to
+                                               # cancerhotspots.org
+                                               res_cancerhotspots = "True" 
                                                
                                                criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                                points_df.loc[var_identifier, 'OS3_p'] = 0
                                                     
                                     else:
+                                        
+                                        # the residue is not in cancerhotspots
+                                        res_cancerhotspots = "False" 
+                                        
                                         criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                         points_df.loc[var_identifier, 'OS3_p'] = 0
                                         
@@ -979,7 +1016,7 @@ for filename in os.listdir(input_data_dir):
                                         if len(res_variant_inframe_indel) == 0:
                                             
                                             # the residue is not in cancerhotspots
-                                            res_cancerhotspots = "False"
+                                            res_cancerhotspots = "False" 
                                                 
                                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                             points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -987,24 +1024,38 @@ for filename in os.listdir(input_data_dir):
                                         else:
                                             
                                             if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                    
+                                                
+                                                res_cancerhotspots = "True" 
+                                                
                                                 criteria_df.loc[var_identifier, 'OS3'] = 'yes'
                                                 points_df.loc[var_identifier, 'OS3_p'] = 4
+                                                break;
                                             
                                             else:
                                                 
                                                 # the residue is in cancerhotspots but not 
-                                                # satisfying OS3 requirements 
-                                                res_cancerhotspots = "True"
+                                                # satisfying OS3 requirements. This avoid 
+                                                # verifying the presence of the variant in 
+                                                # COSMIC, given that we give priority to
+                                                # cancerhotspots.org 
+                                                res_cancerhotspots = "True" 
                                                 
                                                 criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                                 points_df.loc[var_identifier, 'OS3_p'] = 0
                                     
                                     else:
+                                        
+                                        # the residue is not in cancerhotspots
+                                        res_cancerhotspots = "False" 
+                                        
                                         criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                         points_df.loc[var_identifier, 'OS3_p'] = 0
 
                     else:
+                        
+                        # there are no residues in cancerhotspots 
+                        # belonging to the evaluated gene
+                        res_cancerhotspots = "False"
                         
                         criteria_df.loc[var_identifier, 'OS3'] = 'no'
                         points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -1022,7 +1073,7 @@ for filename in os.listdir(input_data_dir):
                         if len(res_var_single_residue) == 0: 
                             
                             # the residue is not in cancerhotspots
-                            res_cancerhotspots = "False"
+                            res_cancerhotspots = "False" 
                             
                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                             points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -1034,7 +1085,10 @@ for filename in os.listdir(input_data_dir):
                             
                             # Satisfying OS3 requirements 
                             if (len(res_var) != 0) and (sum(list(map(int, res_var_single_residue[0].values() ))) >= 50) and (int(res_var[0]) >= 10):
-                                    
+                                
+                                # the residue is in cancerhotspots
+                                res_cancerhotspots = "True" 
+                                
                                 criteria_df.loc[var_identifier, 'OS3'] = 'yes'
                                 points_df.loc[var_identifier, 'OS3_p'] = 4
                             
@@ -1042,13 +1096,20 @@ for filename in os.listdir(input_data_dir):
                             else:
                                 
                                 # the residue is in cancerhotspots but not 
-                                # satisfying OS3 requirements
-                                res_cancerhotspots = "True"
+                                # satisfying OS3 requirements. This avoid 
+                                # verifying the presence of the variant in 
+                                # COSMIC, given that we give priority to
+                                # cancerhotspots.org
+                                res_cancerhotspots = "True" 
                                 
                                 criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                 points_df.loc[var_identifier, 'OS3_p'] = 0 
                                     
                     else:
+                        
+                        # there are no residues in cancerhotspots
+                        # belonging to the evaluated gene
+                        res_cancerhotspots = "False" 
                         
                         criteria_df.loc[var_identifier, 'OS3'] = 'no'
                         points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -1076,8 +1137,8 @@ for filename in os.listdir(input_data_dir):
                         cosmic_entries_same_AA_change = sum([selection[key3][key4] for key3 in selection.keys() for key4 in selection[key3].keys() if key3 == var_id.split(":")[1]])
                         
                     else:
-                        cosmic_entries_AA_pos = 0
-                        cosmic_entries_same_AA_change = 0
+                        cosmic_entries_AA_pos = float('nan')
+                        cosmic_entries_same_AA_change = float('nan')
                 
                 
                 elif ("c." in var_id) or ("g." in var_id):
@@ -1088,10 +1149,14 @@ for filename in os.listdir(input_data_dir):
                     key_AA_change = str(chrom) + ":" + data_init.loc[index, "HGVSg"].split(':')[1]
                     
                     # How many samples are mutated in the AA position
-                    cosmic_entries_AA_pos_hgvsg = sum([len(cosmic_hgvsg_dict[key1]) for key1 in cosmic_hgvsg_dict.keys() if key1.startswith(key_AA_pos)])
+                    cosmic_entries_AA_pos = sum([len(cosmic_hgvsg_dict[key1]) for key1 in cosmic_hgvsg_dict.keys() if key1.startswith(key_AA_pos)])
                         
                     # How many samples are mutated with the same AA change
                     cosmic_entries_same_AA_change = sum([len(cosmic_hgvsg_dict[key2]) for key2 in cosmic_hgvsg_dict.keys() if key2 == key_AA_change])
+                    
+                else:
+                    cosmic_entries_AA_pos = float('nan')
+                    cosmic_entries_same_AA_change = float('nan')
 
                     
                 if (cosmic_entries_AA_pos >= 50) and (cosmic_entries_same_AA_change >= 10):
@@ -1103,6 +1168,9 @@ for filename in os.listdir(input_data_dir):
                     criteria_df.loc[var_identifier, 'OS3'] = 'no'
                     points_df.loc[var_identifier, 'OS3_p'] = 0
                     
+            else:
+                cosmic_entries_AA_pos = float('nan')
+                cosmic_entries_same_AA_change = float('nan')
                 
             #-----------------------------------------------------------------------------#
             # -------------------------------------------------------------------------- ##
@@ -1391,6 +1459,7 @@ for filename in os.listdir(input_data_dir):
                                        
                                                criteria_df.loc[var_identifier, 'OM4'] = 'yes'
                                                points_df.loc[var_identifier, 'OM4_p'] = 2
+                                               break;
                                                    
                                            else:
                                                
@@ -1419,6 +1488,7 @@ for filename in os.listdir(input_data_dir):
                                     
                                                 criteria_df.loc[var_identifier, 'OM4'] = 'yes'
                                                 points_df.loc[var_identifier, 'OM4_p'] = 2
+                                                break;
                                             
                                             else:
                                                 criteria_df.loc[var_identifier, 'OM4'] = 'no'
@@ -1579,6 +1649,7 @@ for filename in os.listdir(input_data_dir):
                                                
                                                criteria_df.loc[var_identifier, 'OP3'] = 'yes'
                                                points_df.loc[var_identifier, 'OP3_p'] = 1
+                                               break;
                                                    
                                            else:
                                                
@@ -1607,6 +1678,7 @@ for filename in os.listdir(input_data_dir):
                                                
                                                 criteria_df.loc[var_identifier, 'OP3'] = 'yes'
                                                 points_df.loc[var_identifier, 'OP3_p'] = 1
+                                                break;
                                             
                                             else:
                                                 criteria_df.loc[var_identifier, 'OP3'] = 'no'
@@ -1870,7 +1942,6 @@ for filename in os.listdir(input_data_dir):
                 
                 classification = "Oncogenic"
                 
-            
             if var_identifier not in classification_dict.keys():
                 
                 classification_dict[var_identifier] = {}
