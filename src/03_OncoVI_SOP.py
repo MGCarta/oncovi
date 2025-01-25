@@ -1073,7 +1073,7 @@ for filename in os.listdir(input_data_dir):
                         if len(res_var_single_residue) == 0: 
                             
                             # the residue is not in cancerhotspots
-                            res_cancerhotspots = "False" 
+                            res_cancerhotspots = "False"
                             
                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                             points_df.loc[var_identifier, 'OS3_p'] = 0
