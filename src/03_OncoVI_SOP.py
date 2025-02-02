@@ -906,7 +906,7 @@ for filename in os.listdir(input_data_dir):
                                                         
                             if not '-' in key:
                                 
-                                if amino_acid_position == key:
+                                if (amino_acid_position != "") and (amino_acid_position == key):
                                     
                                     res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
                                     
@@ -955,102 +955,112 @@ for filename in os.listdir(input_data_dir):
                             else:
                                 
                                 ## create range value 
-                                min_range, max_range = key.split('-')                                    
+                                min_range, max_range = key.split('-')
                                 
-                                amino_acid_pos_list = re.findall("\d+", amino_acid_position)
+                                if amino_acid_position != "":                                    
+                                
+                                    amino_acid_pos_list = re.findall("\d+", amino_acid_position)
 
-                                if len(amino_acid_pos_list) >1:
-                                    
-                                    if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
+                                    if len(amino_acid_pos_list) >1:
                                         
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
+                                        if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
                                             
-                                            # the residue is not in cancerhotspots
-                                            res_cancerhotspots = "False" 
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
+                                            
+                                            if len(res_variant_inframe_indel) == 0:
                                                 
-                                            criteria_df.loc[var_identifier, 'OS3'] = 'no'
-                                            points_df.loc[var_identifier, 'OS3_p'] = 0
-                                                
-                                        else:
-                                                
-                                           # Check if the requirements from the guidelines are satisfied
-                                           # by cancerhotspots records
-                                           if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                               
-                                               # the residue is in cancerhotspots
-                                               res_cancerhotspots = "True"
-                                               
-                                               criteria_df.loc[var_identifier, 'OS3'] = 'yes'
-                                               points_df.loc[var_identifier, 'OS3_p'] = 4
-                                               break;
-                                                   
-                                           else:
-                                               
-                                               # the residue is in cancerhotspots but not 
-                                               # satisfying OS3 requirements. This avoid 
-                                               # verifying the presence of the variant in 
-                                               # COSMIC, given that we give priority to
-                                               # cancerhotspots.org
-                                               res_cancerhotspots = "True" 
-                                               
-                                               criteria_df.loc[var_identifier, 'OS3'] = 'no'
-                                               points_df.loc[var_identifier, 'OS3_p'] = 0
+                                                # the residue is not in cancerhotspots
+                                                res_cancerhotspots = "False" 
                                                     
-                                    else:
-                                        
-                                        # the residue is not in cancerhotspots
-                                        res_cancerhotspots = "False" 
-                                        
-                                        criteria_df.loc[var_identifier, 'OS3'] = 'no'
-                                        points_df.loc[var_identifier, 'OS3_p'] = 0
-                                        
-                                                    
-                                else:
-                                    
-                                    if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
-                                        
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
-                                            
-                                            # the residue is not in cancerhotspots
-                                            res_cancerhotspots = "False" 
-                                                
-                                            criteria_df.loc[var_identifier, 'OS3'] = 'no'
-                                            points_df.loc[var_identifier, 'OS3_p'] = 0
-                                                
-                                        else:
-                                            
-                                            if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                                
-                                                res_cancerhotspots = "True" 
-                                                
-                                                criteria_df.loc[var_identifier, 'OS3'] = 'yes'
-                                                points_df.loc[var_identifier, 'OS3_p'] = 4
-                                                break;
-                                            
-                                            else:
-                                                
-                                                # the residue is in cancerhotspots but not 
-                                                # satisfying OS3 requirements. This avoid 
-                                                # verifying the presence of the variant in 
-                                                # COSMIC, given that we give priority to
-                                                # cancerhotspots.org 
-                                                res_cancerhotspots = "True" 
-                                                
                                                 criteria_df.loc[var_identifier, 'OS3'] = 'no'
                                                 points_df.loc[var_identifier, 'OS3_p'] = 0
-                                    
+                                                    
+                                            else:
+                                                    
+                                               # Check if the requirements from the guidelines are satisfied
+                                               # by cancerhotspots records
+                                               if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
+                                                   
+                                                   # the residue is in cancerhotspots
+                                                   res_cancerhotspots = "True"
+                                                   
+                                                   criteria_df.loc[var_identifier, 'OS3'] = 'yes'
+                                                   points_df.loc[var_identifier, 'OS3_p'] = 4
+                                                   break;
+                                                       
+                                               else:
+                                                   
+                                                   # the residue is in cancerhotspots but not 
+                                                   # satisfying OS3 requirements. This avoid 
+                                                   # verifying the presence of the variant in 
+                                                   # COSMIC, given that we give priority to
+                                                   # cancerhotspots.org
+                                                   res_cancerhotspots = "True" 
+                                                   
+                                                   criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                                   points_df.loc[var_identifier, 'OS3_p'] = 0
+                                                        
+                                        else:
+                                            
+                                            # the residue is not in cancerhotspots
+                                            res_cancerhotspots = "False" 
+                                            
+                                            criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                            points_df.loc[var_identifier, 'OS3_p'] = 0
+                                            
+                                                        
                                     else:
                                         
-                                        # the residue is not in cancerhotspots
-                                        res_cancerhotspots = "False" 
+                                        if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
+                                            
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
+                                            
+                                            if len(res_variant_inframe_indel) == 0:
+                                                
+                                                # the residue is not in cancerhotspots
+                                                res_cancerhotspots = "False" 
+                                                    
+                                                criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                                points_df.loc[var_identifier, 'OS3_p'] = 0
+                                                    
+                                            else:
+                                                
+                                                if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) >= 50) and (int(res_variant_inframe_indel[0]) >= 10):
+                                                    
+                                                    res_cancerhotspots = "True" 
+                                                    
+                                                    criteria_df.loc[var_identifier, 'OS3'] = 'yes'
+                                                    points_df.loc[var_identifier, 'OS3_p'] = 4
+                                                    break;
+                                                
+                                                else:
+                                                    
+                                                    # the residue is in cancerhotspots but not 
+                                                    # satisfying OS3 requirements. This avoid 
+                                                    # verifying the presence of the variant in 
+                                                    # COSMIC, given that we give priority to
+                                                    # cancerhotspots.org 
+                                                    res_cancerhotspots = "True" 
+                                                    
+                                                    criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                                    points_df.loc[var_identifier, 'OS3_p'] = 0
                                         
-                                        criteria_df.loc[var_identifier, 'OS3'] = 'no'
-                                        points_df.loc[var_identifier, 'OS3_p'] = 0
-
+                                        else:
+                                            
+                                            # the residue is not in cancerhotspots
+                                            res_cancerhotspots = "False" 
+                                            
+                                            criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                            points_df.loc[var_identifier, 'OS3_p'] = 0
+                                
+                                else:
+                                    
+                                   # there are no residues in cancerhotspots 
+                                   # belonging to the evaluated gene
+                                   res_cancerhotspots = "False"
+                                   
+                                   criteria_df.loc[var_identifier, 'OS3'] = 'no'
+                                   points_df.loc[var_identifier, 'OS3_p'] = 0 
                     else:
                         
                         # there are no residues in cancerhotspots 
@@ -1073,7 +1083,7 @@ for filename in os.listdir(input_data_dir):
                         if len(res_var_single_residue) == 0: 
                             
                             # the residue is not in cancerhotspots
-                            res_cancerhotspots = "False"
+                            res_cancerhotspots = "False" 
                             
                             criteria_df.loc[var_identifier, 'OS3'] = 'no'
                             points_df.loc[var_identifier, 'OS3_p'] = 0
@@ -1404,7 +1414,7 @@ for filename in os.listdir(input_data_dir):
                             
                             if not '-' in key:
                                 
-                                if amino_acid_position == key:
+                                if (amino_acid_position != "") and (amino_acid_position == key):
                                     
                                     res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
                                     
@@ -1436,68 +1446,72 @@ for filename in os.listdir(input_data_dir):
                             else:
                                 
                                 ## create range value 
-                                min_range, max_range = key.split('-')                                    
+                                min_range, max_range = key.split('-') 
                                 
-                                amino_acid_pos_list = re.findall("\d+", amino_acid_position)
+                                if amino_acid_position != "":
+                                
+                                    amino_acid_pos_list = re.findall("\d+", amino_acid_position)
 
-                                if len(amino_acid_pos_list) >1:
-                                    
-                                    if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
+                                    if len(amino_acid_pos_list) >1:
                                         
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
-                                                
-                                            criteria_df.loc[var_identifier, 'OM4'] = 'no'
-                                            points_df.loc[var_identifier, 'OM4_p'] = 0
-                                                
-                                        else:
-                                                
-                                           # Check if the requirements from the guidelines are satisfied
-                                           # by cancerhotspots records
-                                           if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) < 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                       
-                                               criteria_df.loc[var_identifier, 'OM4'] = 'yes'
-                                               points_df.loc[var_identifier, 'OM4_p'] = 2
-                                               break;
-                                                   
-                                           else:
-                                               
-                                               criteria_df.loc[var_identifier, 'OM4'] = 'no'
-                                               points_df.loc[var_identifier, 'OM4_p'] = 0
-                                                    
-                                    else:
-                                        criteria_df.loc[var_identifier, 'OM4'] = 'no'
-                                        points_df.loc[var_identifier, 'OM4_p'] = 0
-                                        
-                                                    
-                                else:
-                                    
-                                    if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
-                                        
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
-                                                
-                                            criteria_df.loc[var_identifier, 'OM4'] = 'no'
-                                            points_df.loc[var_identifier, 'OM4_p'] = 0
-                                                
-                                        else:
+                                        if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
                                             
-                                            if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) < 50) and (int(res_variant_inframe_indel[0]) >= 10):
-                                    
-                                                criteria_df.loc[var_identifier, 'OM4'] = 'yes'
-                                                points_df.loc[var_identifier, 'OM4_p'] = 2
-                                                break;
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
                                             
-                                            else:
+                                            if len(res_variant_inframe_indel) == 0:
+                                                    
                                                 criteria_df.loc[var_identifier, 'OM4'] = 'no'
                                                 points_df.loc[var_identifier, 'OM4_p'] = 0
-                                    
+                                                    
+                                            else:
+                                                    
+                                               # Check if the requirements from the guidelines are satisfied
+                                               # by cancerhotspots records
+                                               if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) < 50) and (int(res_variant_inframe_indel[0]) >= 10):
+                                           
+                                                   criteria_df.loc[var_identifier, 'OM4'] = 'yes'
+                                                   points_df.loc[var_identifier, 'OM4_p'] = 2
+                                                   break;
+                                                       
+                                               else:
+                                                   
+                                                   criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                                   points_df.loc[var_identifier, 'OM4_p'] = 0
+                                                        
+                                        else:
+                                            criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                            points_df.loc[var_identifier, 'OM4_p'] = 0
+                                            
+                                                        
                                     else:
-                                        criteria_df.loc[var_identifier, 'OM4'] = 'no'
-                                        points_df.loc[var_identifier, 'OM4_p'] = 0
-
+                                        
+                                        if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
+                                            
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
+                                            
+                                            if len(res_variant_inframe_indel) == 0:
+                                                    
+                                                criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                                points_df.loc[var_identifier, 'OM4_p'] = 0
+                                                    
+                                            else:
+                                                
+                                                if (sum(list(map(int, gene_records_inframe_indel_dict[key].values()))) < 50) and (int(res_variant_inframe_indel[0]) >= 10):
+                                        
+                                                    criteria_df.loc[var_identifier, 'OM4'] = 'yes'
+                                                    points_df.loc[var_identifier, 'OM4_p'] = 2
+                                                    break;
+                                                
+                                                else:
+                                                    criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                                    points_df.loc[var_identifier, 'OM4_p'] = 0
+                                        
+                                        else:
+                                            criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                            points_df.loc[var_identifier, 'OM4_p'] = 0
+                                else:
+                                   criteria_df.loc[var_identifier, 'OM4'] = 'no'
+                                   points_df.loc[var_identifier, 'OM4_p'] = 0
                     else:
                         
                         criteria_df.loc[var_identifier, 'OM4'] = 'no'
@@ -1594,7 +1608,7 @@ for filename in os.listdir(input_data_dir):
                             
                             if not '-' in key:
                                 
-                                if amino_acid_position == key:
+                                if (amino_acid_position != "") and (amino_acid_position == key):
                                     
                                     res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
                                     
@@ -1626,68 +1640,72 @@ for filename in os.listdir(input_data_dir):
                             else:
                                 
                                 ## create range value 
-                                min_range, max_range = key.split('-')                                    
+                                min_range, max_range = key.split('-')        
                                 
-                                amino_acid_pos_list = re.findall("\d+", amino_acid_position)
+                                if amino_acid_position != "":
+                                
+                                    amino_acid_pos_list = re.findall("\d+", amino_acid_position)
 
-                                if len(amino_acid_pos_list) >1:
-                                    
-                                    if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
+                                    if len(amino_acid_pos_list) >1:
                                         
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
-                                                
-                                            criteria_df.loc[var_identifier, 'OP3'] = 'no'
-                                            points_df.loc[var_identifier, 'OP3_p'] = 0
-                                                
-                                        else:
-                                                
-                                           # Check if the requirements from the guidelines are satisfied
-                                           # by cancerhotspots records
-                                           if int(res_variant_inframe_indel[0]) < 10:
-                                               
-                                               criteria_df.loc[var_identifier, 'OP3'] = 'yes'
-                                               points_df.loc[var_identifier, 'OP3_p'] = 1
-                                               break;
-                                                   
-                                           else:
-                                               
-                                               criteria_df.loc[var_identifier, 'OP3'] = 'no'
-                                               points_df.loc[var_identifier, 'OP3_p'] = 0
-                                                    
-                                    else:
-                                        criteria_df.loc[var_identifier, 'OP3'] = 'no'
-                                        points_df.loc[var_identifier, 'OP3_p'] = 0
-                                        
-                                                    
-                                else:
-                                    
-                                    if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
-                                        
-                                        res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
-                                        
-                                        if len(res_variant_inframe_indel) == 0:
-                                                
-                                            criteria_df.loc[var_identifier, 'OP3'] = 'no'
-                                            points_df.loc[var_identifier, 'OP3_p'] = 0
-                                                
-                                        else:
+                                        if (int(amino_acid_pos_list[0]) >= int(min_range)) and (int(amino_acid_pos_list[1]) <= int(max_range)):
                                             
-                                            if int(res_variant_inframe_indel[0]) < 10:
-                                               
-                                                criteria_df.loc[var_identifier, 'OP3'] = 'yes'
-                                                points_df.loc[var_identifier, 'OP3_p'] = 1
-                                                break;
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
                                             
-                                            else:
+                                            if len(res_variant_inframe_indel) == 0:
+                                                    
                                                 criteria_df.loc[var_identifier, 'OP3'] = 'no'
                                                 points_df.loc[var_identifier, 'OP3_p'] = 0
-                                    
+                                                    
+                                            else:
+                                                    
+                                               # Check if the requirements from the guidelines are satisfied
+                                               # by cancerhotspots records
+                                               if int(res_variant_inframe_indel[0]) < 10:
+                                                   
+                                                   criteria_df.loc[var_identifier, 'OP3'] = 'yes'
+                                                   points_df.loc[var_identifier, 'OP3_p'] = 1
+                                                   break;
+                                                       
+                                               else:
+                                                   
+                                                   criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                                   points_df.loc[var_identifier, 'OP3_p'] = 0
+                                                        
+                                        else:
+                                            criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                            points_df.loc[var_identifier, 'OP3_p'] = 0
+                                            
+                                                        
                                     else:
-                                        criteria_df.loc[var_identifier, 'OP3'] = 'no'
-                                        points_df.loc[var_identifier, 'OP3_p'] = 0
-
+                                        
+                                        if int(min_range) <= int(amino_acid_pos_list[0]) <= int(max_range):
+                                            
+                                            res_variant_inframe_indel = [value for key, value in gene_records_inframe_indel_dict[key].items() if prot_change == key]
+                                            
+                                            if len(res_variant_inframe_indel) == 0:
+                                                    
+                                                criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                                points_df.loc[var_identifier, 'OP3_p'] = 0
+                                                    
+                                            else:
+                                                
+                                                if int(res_variant_inframe_indel[0]) < 10:
+                                                   
+                                                    criteria_df.loc[var_identifier, 'OP3'] = 'yes'
+                                                    points_df.loc[var_identifier, 'OP3_p'] = 1
+                                                    break;
+                                                
+                                                else:
+                                                    criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                                    points_df.loc[var_identifier, 'OP3_p'] = 0
+                                        
+                                        else:
+                                            criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                            points_df.loc[var_identifier, 'OP3_p'] = 0
+                                else:
+                                   criteria_df.loc[var_identifier, 'OP3'] = 'no'
+                                   points_df.loc[var_identifier, 'OP3_p'] = 0 
                     else:
                         
                         criteria_df.loc[var_identifier, 'OP3'] = 'no'
