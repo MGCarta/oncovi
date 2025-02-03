@@ -106,6 +106,9 @@ python 02_VEP_based_pipeline.py -i /path/to/oncovi/testdata/SOP_table_union.txt
 python 03_OncoVI_SOP.py
 ```
 
+## OncoVI issues
+Please, help us to improve OncoVI by describing your bug/issue in detail
+
 
 ## License
 The License file applies to all files within this repository.
