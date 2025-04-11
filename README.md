@@ -113,7 +113,8 @@ Please, help us to improve OncoVI by describing your bug/issue in detail
 ## License
 The License file applies to all files within this repository.
 
-OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user, who should also comply with licences of the resources utilised.
+OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user. 
+It is on user responsibility to carefully check and comply with the licenses of the resources that users need to additionally install in order to utilise OncoVI.
 
 ## References
 Please cite our preprint [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1) if you decide to use OncoVI.
