@@ -18,10 +18,10 @@ Workflow of OncoVI:
 ## Software requirements
 OncoVI was implemented and tested on a dedicated conda enviroment running on a remote server based on Ubuntu 20.04.4 long-term support (LTS) operating system. To run OncoVI the following packages are required:
 
-* python
-* numpy
-* pandas
-* subprocess
+* python and site-packages (numpy, pandas, subprocess)
+* Ensembl VEP and VEP plugins dbNSFP and spliceAI
+* external resources, such as COSMIC and ClinVar
+
 
 ### COSMIC resources
 Due to size constraints, the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic) resources utilised by OncoVI could not be uploaded on the GitHub repo. How to download and handle COSMIC data to make them usable by OncoVI is described here below.
