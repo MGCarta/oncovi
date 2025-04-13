@@ -111,9 +111,11 @@ Please, help us to improve OncoVI by describing your bug/issue in detail
 
 
 ## License
-The License file applies to all files within this repository.
+The MIT license file applies to only the scripts within this repository.
 
-OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user. 
+OncoVI makes use of resources that require a dedicated license agreement, such as [OncoKB](https://www.oncokb.org/terms) and [COSMIC](https://www.cosmickb.org/licensing/). 
+For these reasons, OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user. 
+Please, visit the relative websites and verify that you are part of an academic institution to freely use OncoVI. 
 It is on user responsibility to carefully check and comply with the licenses of the resources that users need to additionally install in order to utilise OncoVI.
 
 ## References
