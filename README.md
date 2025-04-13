@@ -116,7 +116,7 @@ The MIT license file applies to only the scripts within this repository.
 OncoVI makes use of resources that require a dedicated license agreement, such as [OncoKB](https://www.oncokb.org/terms) and [COSMIC](https://www.cosmickb.org/licensing/). 
 For these reasons, OncoVI is intended for research purposes only and its use outside of this context is under the responsibility of the user. 
 Please, visit the relative websites and verify that you are part of an academic institution to freely use OncoVI. 
-It is on user responsibility to carefully check and comply with the licenses of the resources that users need to additionally install in order to utilise OncoVI.
+It is the user´s responsibility to carefully check and comply with the licenses of the resources that need to be additionally installed to use OncoVI.
 
 ## References
 Please cite our preprint [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1) if you decide to use OncoVI.
