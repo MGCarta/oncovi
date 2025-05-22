@@ -55,6 +55,7 @@ To download and prepare the ClinVar resource:
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
 ```
+To create the conda environment:
 ```rb
 # Create the conda environment for oncovi
 conda env create -n oncovi -f /path/to/OncoVIenvFile.yml
