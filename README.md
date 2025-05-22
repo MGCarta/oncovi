@@ -45,7 +45,7 @@ Due to size constraints, the [COSMIC](https://cancer.sanger.ac.uk/cosmic/downloa
 ### ClinVar resources
 The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 
-#### To download and prepare the ClinVar resource
+To download and prepare the ClinVar resource:
 ```rb
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
