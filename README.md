@@ -20,7 +20,7 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 
 * python and site-packages (numpy, pandas, subprocess)
 * Ensembl VEP and VEP plugins dbNSFP and spliceAI
-* external resources, such as COSMIC and ClinVar
+* external resources, such as COSMIC
 
 
 ### COSMIC resources
@@ -43,13 +43,13 @@ Due to size constraints, the [COSMIC](https://cancer.sanger.ac.uk/cosmic/downloa
 5. The path to the dictionary must be provided to the python script ```03_OncoVI_SOP.py```
 
 ### ClinVar resources
-Due to size constraints the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP could not be uploaded on the GitHub repo. How to download and handle ClinVar data to make them usable by the functional annotation STEP is:
+The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 
-1. First, ```variant_summary.txt.gz``` was downloaded from the [ftp site](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/)
-2. Then, the data set was reduced to the columns: ```GeneSymbol```, ```ClinicalSignificance```, ```Chromosome```, ```Start```, ```VariationID```, ```ReferenceAlleleVCF```, ```AlternateAlleleVCF```, ```ReviewStatus```, and ```NumberSubmitters```
-3. The reduced data set was converted into a dictionary with the python script ``` /src/create_clinvar_dict.py ```
-4. The resulted dictionary was saved under the name ```clinvar_all_dictionary.txt```
-5. The path to the ClinVar dictionary must be provided to the python script ```02_VEP_based_pipeline.py```
+## To download and prepare the ClinVar resource
+```rb
+# Run the bash script
+bash 01_clinvar_resource_manager.sh
+```
 
 ## Get started
 Clone the GitHub repository:
