@@ -34,14 +34,6 @@ Due to size constraints, the [COSMIC](https://cancer.sanger.ac.uk/cosmic/downloa
 4. The resulted dictionary was saved under the name ```cosmic_all_dictionary.txt```
 5. The path to the dictionary must be provided to the python script ```03_OncoVI_SOP.py```
 
-#### Census Genes Mutations 
-
-1. First, [Census Genes Mutations](https://cancer.sanger.ac.uk/cosmic/download/cosmic/v100/mutantcensus) for genome GRCh38 was downloaded
-2. Then, the data set was reduced to the columns: ```GENE_SYMBOL```, ```MUTATION_CDS```, ```MUTATION_AA```, and ```HGVSG```
-3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_cosmic_resources.py ```
-4. The resulted dictionary was saved under the name ```cosmic_hgvsg_dictionary.txt```
-5. The path to the dictionary must be provided to the python script ```03_OncoVI_SOP.py```
-
 ### ClinVar resources
 The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 
