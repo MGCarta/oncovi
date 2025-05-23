@@ -19,20 +19,7 @@ Workflow of OncoVI:
 OncoVI was implemented and tested on a dedicated conda enviroment running on a remote server based on Ubuntu 20.04.4 long-term support (LTS) operating system. To run OncoVI the following packages are required:
 
 * python and site-packages (numpy, pandas, subprocess)
-* Ensembl VEP and VEP plugins dbNSFP and spliceAI
-* external resources, such as COSMIC
-
-
-### COSMIC resources
-Due to size constraints, the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic) resources utilised by OncoVI could not be uploaded on the GitHub repo. How to download and handle COSMIC data to make them usable by OncoVI is described here below.
-
-#### Cancer Mutation Census 
-
-1. First, [All Data CMC](https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v100/alldata-cmc) for genome GRCh38 was downloaded
-2. Then, the data set was reduced to the columns: ```GENE_NAME```, ```Mutation CDS```, ```Mutation AA```, ```AA_MUT_START```, ```Mutation genome position GRCh38```, and ```COSMIC_SAMPLE_MUTATED```
-3. The reduced data set was converted into a dictionary with the python script ``` /src/prepare_cosmic_resources.py ```
-4. The resulted dictionary was saved under the name ```cosmic_all_dictionary.txt```
-5. The path to the dictionary must be provided to the python script ```03_OncoVI_SOP.py```
+* Ensembl VEP and VEP plugins (dbNSFP and spliceAI)
 
 ### ClinVar resources
 The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
