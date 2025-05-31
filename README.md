@@ -31,6 +31,8 @@ git clone https://github.com/MGCarta/oncovi.git
 ```
 To download and prepare the ClinVar resource:
 ```rb
+# Move to the folder where the script is located
+cd oncovi/src/
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
 ```
