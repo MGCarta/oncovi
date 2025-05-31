@@ -26,7 +26,13 @@ OncoVI has been tested on:
 * Ensembl VEP (v. 111)
 * VEP Plugins (dbNSFP and spliceAI)
 
-## Create the conda environment and install the required package
+## Get started
+Clone the GitHub repository:
+```rb
+git clone https://github.com/MGCarta/oncovi.git
+```
+
+### Create the conda environment and install the required package
 1. Create the conda environment envpy310
 ```rb
 conda create --name envpy310 python=3.10
@@ -40,11 +46,6 @@ conda activate envpy310
 pip install pandas
 ```
 
-## Get started
-Clone the GitHub repository:
-```rb
-git clone https://github.com/MGCarta/oncovi.git
-```
 ### ClinVar resources
 The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resource utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 ```rb
