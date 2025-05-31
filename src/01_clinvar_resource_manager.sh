@@ -225,8 +225,6 @@ prepare_COSMIC_resources() {
 
                  # Prepare required resources from COSMIC for OncoVI
                  echo ""
-        	 echo "Preparing required resources from COSMIC for OncoVI"
-        	 echo ""
         	 echo "Unzip file: $file"
         	 echo ""
 		 bgzip -d "$RESOURCE_DIR/$file"
