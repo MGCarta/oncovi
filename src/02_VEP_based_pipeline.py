@@ -1,29 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan 24 09:27:46 2024
+Created on Sat Jun 31 09:27:46 2025
 
 @author: cartama
 
     Script to annotate variants with the Variant Effect Predictor (VEP) from
     
-    Ensembl and to collect the classification of pathogenicity from ClinVar.
+    Ensembl.
 
 """
 
-## ------------------------------------------------------------------------ ##
+## LIBRARIES
 
-# Directory to VEP local API 
-vep_dir = "/path/to/.vep"
+import argparse
+from pathlib import Path
 
-## ------------------------------------------------------------------------ ##
+from colorama import init, Fore
 
-# Libraries
+# Automatically reset the style to normal after each print
+init(autoreset=True)
+
 import pandas as pd
 import numpy as np
-import argparse
 import os
 import json
 import subprocess
+
+## ------------------------------------------------------------------------ ##
+
+## FUNCTIONS
 
 pd.DataFrame.iteritems = pd.DataFrame.items
 
@@ -58,7 +63,6 @@ def slicer(my_str,sub):
 def make_hyperlink(url, value):
 
     return '=HYPERLINK("%s", "%s")' % (url.format(value), value)
-         
 
 #---------------------------------------------------------------------------##
 #     MAIN
@@ -69,8 +73,8 @@ if __name__ == '__main__':
     
     # ArgumentParser object to analyse strings given from command-line 
     # by the user 
-    parser = argparse.ArgumentParser(prog='In-house VEP-based pipeline',
-                                     description="Annotates variants with the Variant Effect Predictor (VEP) by Ensembl v. 111.0")
+    parser = argparse.ArgumentParser(prog='VEP-based Variant Annotation Pipeline', 
+                                     description="Annotates input file with VEP by Ensembl")
     
     # Input txt/VCF file
     parser.add_argument(
@@ -82,65 +86,102 @@ if __name__ == '__main__':
     
     global args
     args = parser.parse_args()
-
-# Check on the file given as input
-input_data_dir = args.input
-
-if vep_dir:
     
-    pass
+## ------------------------------------------------------------------------ ##
+
+### EXAMPLE DATA DIRECTORY
+
+print("")
+print(f"{Fore.MAGENTA}=" * 100)
+print(f"{Fore.MAGENTA}Starting VEP-based Variant Annotation Pipeline")
+print(f"{Fore.MAGENTA}=" * 100)
+print("")
+
+# Input data with absolute path
+input_data_dir = Path(args.input).resolve()
+
+# Parent dir of input data
+full_path_input = os.path.dirname(Path(args.input).resolve())
+print(f"Your test data is located here: {full_path_input}")
+print("")
+
+## ------------------------------------------------------------------------ ##
+
+### VEP DIRECTORY
+
+# Re-build path of .vep from input data full path  
+vep_dir = os.path.join(os.path.dirname(full_path_input), ".vep")
+                       
+# Check on the presence of VEP API
+if os.path.exists(vep_dir):
+    
+    print(f"Your VEP is located here: {vep_dir}")
+    print("")
 
 else:
-    
-    raise TypeError("Path to vep/.vep.")
-
-#---------------------------------------------------------------------------##
-
-print("\n")
-print('************    VEP-based Variant Annotation Pipeline    ************')
-print('=====================================================================\n')
+    print(f"Your VEP is not located here as expected: {vep_dir}")
+    print("")
     
 #---------------------------------------------------------------------------##
-        
-print('*****************    Uploading ClinVar database    ******************')
-print('=====================================================================\n')
 
-######## ClinVar DATABASE ##########
-clinvar_data_dir = "/path/to/clinvar_all_dictionary.txt"
+### CLINVAR RESOURCE
+
+print(f"{Fore.CYAN}Upload ClinVar resource")
+print(f"{Fore.CYAN}-" * 100)
+print("")
+
+# Re-build path of resources
+resources_data_dir = os.path.join(os.path.dirname(full_path_input), "resources")
 
 # Open the clinvar database as dictionary
-with open(os.path.join(clinvar_data_dir, "clinvar_all_dictionary.txt"), 'r') as fp:
+with open(os.path.join(resources_data_dir, "clinvar_all_dictionary.json"), 'r') as fp:
     clinvar_all_dict = json.load(fp)
 
 #---------------------------------------------------------------------------##
 
-print("")
-print(args)
-print("\n")
-print("Input txt file:", args.input)
-print("\n")    
+### PREPARE DATA FOR ANNOTATION WITH VEP 
 
 # origin_path: parent dir of the input data file 
 # input_data: name of the input data file 
-origin_path, input_data = os.path.split(input_data_dir)
+origin_path = full_path_input
+
+input_data = os.path.split(input_data_dir)[1]
+
+print(f"Your test data: {input_data}")
+print("")
 
 # Input data name 
 input_data_name = input_data.split(".txt")[0]
 
+print(f"Name of your test data: {input_data_name}")
+print("")
+
 # Path to VEP output 
 output_file = os.path.join(input_data_name + "_annotated.vcf")
 
+print(f"Name of your annotated output: {output_file}")
+print("")
 
-print('********************    VEP Output Computing    *********************')
-print('=====================================================================\n')
+#---------------------------------------------------------------------------##
+
+### RUN VEP 
+
+print(f"{Fore.MAGENTA}=" * 100)
+print(f"{Fore.MAGENTA}Creating VEP output")
+print(f"{Fore.MAGENTA}=" * 100)
 print("")
 
 # Call the VEP function
 vep_output = call_vep_shell_script(input_data_dir, origin_path, output_file, vep_dir)
-    
-print("\n")
-print('******************    Post-Processing VEP Output    *****************')
-print('=====================================================================\n')
+
+#---------------------------------------------------------------------------##
+
+### POST-PROCESS VEP OUTPUT
+
+print("")
+print(f"{Fore.MAGENTA}=" * 100)
+print(f"{Fore.MAGENTA}Post-processing VEP output")
+print(f"{Fore.MAGENTA}=" * 100)
 print("")
 
 # Annotated VEP output
@@ -185,7 +226,9 @@ annotated_df = dataframe_fill(records_list)
 
 annotated_df.index = np.arange(1, len(annotated_df)+1)           
     
-########## INFO FIELD  ########################################################
+#---------------------------------------------------------------------------##
+
+### HANDLING INFO FIELD
 
 # Create new dataframe only for the INFO field     
 df_of_info = pd.DataFrame({'INFO':dict_of_predictions})
@@ -205,7 +248,9 @@ header = slicer(info_header, "Allele")
 header = header[:-3]
 header_to_list = header.split('|')
 
-########## CANONICAL TRANSCRIPTS ##############################################
+#---------------------------------------------------------------------------##
+
+### HANDLING CANONICAL TRANSCRIPTS
 
 # Add a flag that indicates the type of transcript in the first 
 # position in the VEP output. Allowed values are: Canonical and VEP first
@@ -278,7 +323,9 @@ for index_row, row in df_info_ordered.iterrows():
         annotated_df.loc[index_row,"Transcript #1"] = "VEP first"
         continue 
 
-########## COUNT TRANSCRIPTS PER VARIANT ######################################   
+#---------------------------------------------------------------------------##
+
+### COUNT TRANSCRIPTS PER VARIANT
 
 # Count and store in the dataframe the number of consequences for each variant
 annotated_df['count_cons'] = (~df_info_ordered.isna()).sum(1)
@@ -313,16 +360,22 @@ final_annotated_df = annotated_df.fillna('')
 # Path to the final output 
 file_output_path = os.path.join(origin_path,str(input_data_name) + "_vep.xlsx")
 
-print("Saving the final output:", file_output_path)
+print(f"{Fore.CYAN}Saving the final output:")
+print(f"{Fore.CYAN}{file_output_path}")
+print(f"{Fore.CYAN}-" * 100)
 print("")
 
 # Save the final output to file
 final_annotated_df.to_excel(file_output_path, index=False)
   
+#---------------------------------------------------------------------------##
 
-print('***************    Variant Classification Pipeline    ***************')
-print('=====================================================================\n')
-print("\n")  
+### VARIANT CLASSIFICATION PIPELINE
+
+print(f"{Fore.MAGENTA}=" * 100)
+print(f"{Fore.MAGENTA}Variant Classification Pipeline")
+print(f"{Fore.MAGENTA}=" * 100)
+print("")
 
 ## Input to the variant classification pipeline
 vep_output = pd.read_excel(file_output_path, na_values = 'NA', keep_default_na=False)
@@ -341,9 +394,13 @@ vep_output_subset = vep_output[['SYMBOL','HGVSc','HGVSp','HGVSg','MANE_SELECT',
                                 'phastCons100way_vertebrate_rankscore',
                                 'SpliceAI_cutoff']]                 
 
-print('***************        ClinVar database query         ***************')
-print('=====================================================================\n')
-print("\n")  
+#---------------------------------------------------------------------------##
+
+### CLINVAR DATABASE QUERY
+
+print(f"{Fore.CYAN}ClinVar database query")
+print(f"{Fore.CYAN}-" * 100)
+print("")
 
 # List of ClinVar data 
 list_all_clinvar = []
@@ -365,7 +422,10 @@ for index, row in vep_output_subset.iterrows():
 columns = ["ClinVar_VariationID",
            "ClinVar_germline", 
            "ClinVar_germline_ReviewStatus",
-           "NumberSubmitters"]
+           "ClinVar_Oncogenicity",
+           "ClinVar_Oncogenicity_ReviewStatus",
+           "ClinVar_Somatic_Clinical_Impact",
+           "ClinVar_Somatic_ReviewStatus"]
 
 clinvar_df = pd.DataFrame(list_all_clinvar, columns = columns)
 
@@ -385,14 +445,43 @@ vep_output_subset['Clinvar_url'] = vep_output_subset['ClinVar_VariationID'].appl
 # Remove the temporary column that contained the names that replaced the URLs 
 vep_output_subset = vep_output_subset.drop('ClinVar_VariationID', axis=1)
 
+#---------------------------------------------------------------------------##
 
-print('***************     Saving the classification output      ***********')
-print('=====================================================================\n')
-print("\n")
+### SAVING THE CLASSIFICATION OUTPUT
 
 # Save the final output
-file_predicted_output_path = os.path.join(origin_path, str(input_data_name) + "_prediction.xlsx")        
+file_predicted_output_path = os.path.join(origin_path, str(input_data_name) + "_vep_classification.xlsx")        
 vep_output_subset.to_excel(file_predicted_output_path, index = False)
 
-print('**********************    Analysis Completed    *********************')
-print('=====================================================================\n')
+print(f"{Fore.CYAN}Saving the classification output:")
+print(f"{Fore.CYAN}{file_predicted_output_path}")
+print(f"{Fore.CYAN}-" * 100)
+print("")
+
+#---------------------------------------------------------------------------##
+
+### RUN OncoVI
+
+print("")
+print(f"{Fore.MAGENTA}Running OncoVI on the VEP annotated output")
+print(f"{Fore.MAGENTA}=" * 100)
+print("")
+
+# Resources for OncoVI
+resources_oncovi = resources_data_dir
+
+# Path to python script for OncoVI evaluation of the oncogenicity guidelines
+main = os.path.join(os.getcwd(), "03_OncoVI_SOP.py")
+
+# Command to run OncoVI script
+cmd = " python "+main+" -i "+file_predicted_output_path+" -r "+resources_oncovi+" -d "+input_data_name
+os.system(cmd)
+
+#---------------------------------------------------------------------------##
+
+### ANALYSIS COMPLETED
+
+print(f"{Fore.MAGENTA}=" * 100)
+print(f"{Fore.MAGENTA}Analysis completed")
+print(f"{Fore.MAGENTA}=" * 100)
+print("")
