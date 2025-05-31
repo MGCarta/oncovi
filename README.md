@@ -102,7 +102,8 @@ The dbNSFP plugin is used by the the functional annotation STEP. Detailed inform
 The spliceAI plugin is used during the the functional annotation STEP. Detailed information on how to set up the spliceAI plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#spliceAI). The spliceAI Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.  
 
 ## Test OncoVI on an exemplary set of variants
-### Input data
+
+#### Input data
 Both variants in text format and in variant call format (VCF) are accepted by OncoVI.
 An exemplary input data in text format is available under:
 ```rb
