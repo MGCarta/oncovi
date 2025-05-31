@@ -23,7 +23,7 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 * python site-packages (numpy, pandas, subprocess)
 
 OncoVI has been tested on:
-* Ensembl VEP (v. 111)
+* Ensembl VEP conda package >=v.111
 * VEP Plugins (dbNSFP and spliceAI)
 
 ## Get started
