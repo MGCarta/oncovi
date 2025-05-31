@@ -77,7 +77,7 @@ cd ../.vep
 wget ftp://ftp.ensembl.org/pub/release-114/variation/indexed_vep_cache/homo_sapiens_refseq_vep_114_GRCh38.tar.gz
 
 # Extract the archive
-tar -xzf homo_sapiens_refseq_vep_110_GRCh38.tar.gz
+tar -xzf homo_sapiens_refseq_vep_114_GRCh38.tar.gz
 ```
 
 ### dbNSFP plugin
