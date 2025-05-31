@@ -16,13 +16,18 @@ Workflow of OncoVI:
 ###### The figure shows the implemented criteria in OncoVI (11 and five criteria for evidence of oncogenic and benign effect respectively), the public resources utilised to assess each criterion, the points associated with each criterion and the classification of oncogenicity into one of five classes on the basis of the variant-specific score, obtained as the sum of the points associated to the criteria triggered by OncoVI for the variant: score≥10:Oncogenic (O), 6≤score≤9:Likely Oncogenic (LO), 0≤score≤5:Variant of uncertain significance (VUS), -6≤score≤-1:Likely Benign (LB), score≤-7:Benign (B). Blue: resources suggested by the Standard Operating Procedure by Horak et al.; black: resources identified by the authors of OncoVI.
 
 ## Software requirements
-OncoVI was implemented and tested on a dedicated conda enviroment running on a remote server based on Ubuntu 20.04.4 long-term support (LTS) operating system. To run OncoVI the following packages are required:
+OncoVI was implemented and tested on a dedicated conda enviroment running on a remote server based on Ubuntu 20.04.4 long-term support (LTS) operating system. To use this repository make sure to have:
 
-* python >=3.8.8 and site-packages (numpy, pandas, subprocess)
-* Ensembl VEP and VEP plugins (dbNSFP and spliceAI)
+* conda >= 24.11.1
+* python >=3.8.8
+* python site-packages (numpy, pandas, subprocess)
+
+OncoVI has been tested on:
+* Ensembl VEP (v. 111)
+* VEP Plugins (dbNSFP and spliceAI)
 
 ## Create the conda environment and install the required package
-1. Crete the conda environment envpy310
+1. Create the conda environment envpy310
 ```rb
 conda create --name envpy310 python=3.10
 ```
@@ -35,20 +40,20 @@ conda activate envpy310
 pip install pandas
 ```
 
-### ClinVar resources
-The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
-
 ## Get started
 Clone the GitHub repository:
 ```rb
 git clone https://github.com/MGCarta/oncovi.git
 ```
-Download and prepare the ClinVar resource:
+### ClinVar resources
+The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resource utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 ```rb
 # Move to the folder where the script is located
 cd oncovi/src/
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
+# Deactivate the envpy310 environment
+conda deactivate
 ```
 Create the conda environment:
 ```rb
