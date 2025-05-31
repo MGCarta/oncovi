@@ -66,19 +66,19 @@ conda install bioconda::ensembl-vep
 ```
 2. Run the installer (the latest version of the package will be automatically installed)
 ```rb
-vep_install --NO_HTSLIB -c '../.vep' -r '../.vep/Plugins/'
+vep_install --NO_HTSLIB -a fp -s homo_sapiens -y GRCh38 --PLUGINS all -c '../.vep' -r '../.vep/Plugins/'
 ```
-3. Answer to the question for cache files installation with ```y```
+3. Install the cache files
 ```rb
-Do you want to install any cache files (y/n)?
+# Move to the folder generated to save cache files
+cd ../.vep
+
+# Download the cache files
+wget ftp://ftp.ensembl.org/pub/release-114/variation/indexed_vep_cache/homo_sapiens_refseq_vep_114_GRCh38.tar.gz
+
+# Extract the archive
+tar -xzf homo_sapiens_refseq_vep_110_GRCh38.tar.gz
 ```
-4. Answer to the question for cache files installation with ```y```
-```rb
-Cache directory ../.vep does not exists - do you want to create it (y/n)?
-```
-5. Select ```homo_sapiens_refseq_vep_114_GRCh38.tar.gz``` by typing ```507```
-6. Select ```homo_sapiens_vep_114_GRCh38.tar.gz``` by typing ```?```
-7. Then install all Plugins.
 
 ### dbNSFP plugin
 The dbNSFP plugin is used by the the functional annotation STEP. Detailed information on how to set up the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp). The dbNSFP Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.
