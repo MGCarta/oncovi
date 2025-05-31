@@ -58,7 +58,7 @@ bash 01_clinvar_resource_manager.sh
 
 ### Instructions to set up VEP manually
 > [!NOTE]
-Make sure to have enough space in your current directory. Cache files require almost 30 GB (~26 GB for ```homo_sapiens_refseq_vep_111_GRCh38.tar.gz``` and ~1 GB for ```homo_sapiens_vep_111_GRCh38.tar.gz```).
+Make sure to have enough space in your current directory. Cache files require almost 30 GB (~26 GB for ```homo_sapiens_refseq_vep_114_GRCh38.tar.gz``` and ~1 GB for ```homo_sapiens_vep_114_GRCh38.tar.gz```).
 
 1. Install the conda package Ensembl Vep 
 ```rb
@@ -76,8 +76,8 @@ Do you want to install any cache files (y/n)?
 ```rb
 Cache directory ../.vep does not exists - do you want to create it (y/n)?
 ```
-5. Select ```homo_sapiens_refseq_vep_111_GRCh38.tar.gz``` by typing ```507```
-6. Select ```homo_sapiens_vep_111_GRCh38.tar.gz``` by typing ```?```
+5. Select ```homo_sapiens_refseq_vep_114_GRCh38.tar.gz``` by typing ```507```
+6. Select ```homo_sapiens_vep_114_GRCh38.tar.gz``` by typing ```?```
 7. Then install all Plugins.
 
 ### dbNSFP plugin
