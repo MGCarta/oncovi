@@ -134,6 +134,7 @@ An exemplary output file is available here for inspection:
 
 The output file includes:
 * Features characterising the variants that were collected during either the VEP annotation step (i.e., ```SYMBOL```,	```HGVSc```,	```HGVSp```,	```MANE_SELECT```,	```EXON```,	```CHROM```,	```POS```,	```REF```,	```ALT```,	```Amino_acids```,	```Existing_variation```,	```Consequence```,	```Transcript #1```,	```gnomADe_AF```,	```gnomADg_AF```) or the ClinVar interrogation step (i.e., ```ClinVar_germline```,	```ClinVar_germline_ReviewStatus```,	```ClinVar_Oncogenicity```,	```ClinVar_Oncogenicity_ReviewStatus```,	```ClinVar_Somatic_Clinical_Impact```,	```ClinVar_Somatic_ReviewStatus```,	```Clinvar_url```)
+  
 * Features calculated by OncoVI: the variant-specific score, i.e., the sum of the points associated with the criteria triggered by OncoVI (```Points```), the oncogenicity classification associated with the variant-specific score according to the point-based system provided by Horak et al. (```Classification```), the criteria triggered by OncoVI based on the evidences collected	(```Criteria```)
 
 ## OncoVI issues
