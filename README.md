@@ -21,6 +21,20 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 * python >=3.8.8 and site-packages (numpy, pandas, subprocess)
 * Ensembl VEP and VEP plugins (dbNSFP and spliceAI)
 
+## Create the conda environment and install the required package
+1. Crete the conda environment envpy310
+```rb
+conda create --name envpy310 python=3.10
+```
+2. Activate the conda environment
+```rb
+conda activate envpy310
+```
+3. Install pandas
+```rb
+pip install pandas
+```
+
 ### ClinVar resources
 The download and preparation of [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resources utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 
