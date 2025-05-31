@@ -51,8 +51,10 @@ The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinv
 ```rb
 # Move to the folder where the script is located
 cd oncovi/src/
+
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
+
 # Deactivate the envpy310 environment
 conda deactivate
 ```
