@@ -104,10 +104,15 @@ The spliceAI plugin is used during the the functional annotation STEP. Detailed 
 ## Test OncoVI on an exemplary set of variants
 
 #### Input data
-Both variants in text format and in variant call format (VCF) are accepted by OncoVI.
+Both variants in text format and in variant call format (VCF) are accepted by OncoVI. No other formats are currently supported.
+
 An exemplary input data in text format is available under:
 ```rb
 # ~/oncovi/testdata/SOP_table_union.txt
+```
+An exemplary input data in VCF format is available under:
+```rb
+# ~/oncovi/testdata/onco_som_GRCh38_ClinVar_vep_input.vcf
 ```
 
 #### Run OncoVI
