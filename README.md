@@ -20,7 +20,7 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 
 * conda >= 24.11.1
 * python >=3.8.8
-* python site-packages (numpy, pandas, subprocess)
+* python site-packages (pandas, colorama, openpyxl)
 
 OncoVI has been tested on:
 * Ensembl VEP conda package >=v.111
@@ -32,7 +32,7 @@ Clone the GitHub repository:
 git clone https://github.com/MGCarta/oncovi.git
 ```
 
-### Create the conda environment and install the required package
+### Create the conda environment and install the required packages
 1. Create the conda environment envpy310
 ```rb
 conda create --name envpy310 python=3.10
@@ -45,13 +45,22 @@ conda activate envpy310
 ```rb
 pip install pandas
 ```
+4. Install colorama
+```rb
+pip install colorama
+```
+5. Install openpyxl
+```rb
+pip install openpyxl
+```
 
 ### ClinVar resources
 The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resource utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
 ```rb
 # Move to the folder where the script is located
 cd oncovi/src/
-
+```
+```rb
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
 ```
@@ -72,13 +81,16 @@ vep_install --NO_HTSLIB -a fp -s homo_sapiens -y GRCh38 --PLUGINS all -c '../.ve
 ```rb
 # Move to the folder generated to save cache files
 cd ../.vep
-
+```
+```rb
 # Download the cache files
 wget ftp://ftp.ensembl.org/pub/release-114/variation/indexed_vep_cache/homo_sapiens_refseq_vep_114_GRCh38.tar.gz
-
+```
+```rb
 # Extract the archive
 tar -xzf homo_sapiens_refseq_vep_114_GRCh38.tar.gz
-
+```
+```rb
 # Remove the archive
 rm homo_sapiens_refseq_vep_114_GRCh38.tar.gz
 ```
@@ -89,30 +101,23 @@ The dbNSFP plugin is used by the the functional annotation STEP. Detailed inform
 ### spliceAI plugin
 The spliceAI plugin is used during the the functional annotation STEP. Detailed information on how to set up the spliceAI plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#spliceAI). The spliceAI Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.  
 
-## Prepare your variants
-Both variants in text format and in variant call format (VCF) are accepted by [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html). Please refer to VEP [official documentation](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html#input) for a detailed description of input formats.
-A test data is available under:
-
+## Test OncoVI on an exemplary set of variants
+### Input data
+Both variants in text format and in variant call format (VCF) are accepted by OncoVI.
+An exemplary input data in text format is available under:
 ```rb
-# /oncovi/testdata/SOP_table_union.txt
-```
-
-#### Perform functional annotation via VEP
-
-```rb
-# Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
-
-# Run the functional annotation
-python 02_VEP_based_pipeline.py -i /path/to/oncovi/testdata/SOP_table_union.txt
+# ~/oncovi/testdata/SOP_table_union.txt
 ```
 
 #### Run OncoVI
 
 ```rb
-# Navigate to the directory in which the python script 03_OncoVI_SOP.py is located
-
+# Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
+cd ../src
+```
+```rb
 # Run OncoVI
-python 03_OncoVI_SOP.py
+python 02_VEP_based_pipeline.py -i ../testdata/SOP_table_union.txt
 ```
 
 ## OncoVI issues
