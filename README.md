@@ -18,7 +18,7 @@ Workflow of OncoVI:
 ## Software requirements
 OncoVI was implemented and tested on a dedicated conda enviroment running on a remote server based on Ubuntu 20.04.4 long-term support (LTS) operating system. To run OncoVI the following packages are required:
 
-* python and site-packages (numpy, pandas, subprocess)
+* python >=3.8.8 and site-packages (numpy, pandas, subprocess)
 * Ensembl VEP and VEP plugins (dbNSFP and spliceAI)
 
 ### ClinVar resources
