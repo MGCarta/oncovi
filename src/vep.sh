@@ -1,22 +1,21 @@
 #!/bin/bash
 
+# The script takes in input the txt/VCF file and runs VEP
 
-# shell script which takes as input the txt/VCF file provided by the 
-# 02_VEP_based_pipeline.py script and runs VEP
+FULL_PATH_INPUT_DATA=$1
+PARENT_DIR_INPUT_DATA=$2
+OUTPUT_NAME=$3
+VEP_DIR=$4
 
-# Move to the directory in which the shell script is located 
-
+# Move to the directory in which the shell script is located
 cd "$(dirname "$0")"
-echo "VEP annotation of file $1"
+echo "VEP annotation of file: $FULL_PATH_INPUT_DATA"
 echo " "
 
 # Verify that the file exists and has the correct extension
-# Modify here ".vcf" according to file extension
 
-if [ -f $1 ] && [ ${1: -4} == ".txt" ]
-
+if [ -f "$FULL_PATH_INPUT_DATA" ] && ([[ "$FULL_PATH_INPUT_DATA" == *.txt ]] || [[ "$FULL_PATH_INPUT_DATA" == *.vcf ]]);
 then
-
 	vep --offline \
 	--cache \
 	--fork 4 \
@@ -40,17 +39,16 @@ then
 	--domains \
 	--vcf \
 	--dir $4 \
-	--fasta /path/to/.vep/homo_sapiens/111_GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa.gz \
-	--input_file $1 \
-	--plugin dbNSFP,/path/to/.vep/Plugins/dbNSFP/dbNSFP4.5a_grch38.gz,pep_match=0,phyloP100way_vertebrate_rankscore,phastCons100way_vertebrate_rankscore \
-	--plugin SpliceAI,snv=/path/to/.vep/Plugins/spliceAI/spliceai_scores.raw.snv.hg38.vcf.gz,indel=/path/to/.vep/Plugins/spliceAI/spliceai_scores.raw.indel.hg38.vcf.gz,cutoff=0.5 \
-	--output_file $2/vep_${3}
+	--fasta $VEP_DIR/homo_sapiens/114_GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa.gz \
+	--input_file $FULL_PATH_INPUT_DATA \
+	--plugin dbNSFP,$VEP_DIR/Plugins/dbNSFP/dbNSFP4.5a_grch38.gz,pep_match=0,phyloP100way_vertebrate_rankscore,phastCons100way_vertebrate_rankscore \
+	--plugin SpliceAI,snv=$VEP_DIR/Plugins/spliceAI/spliceai_scores.raw.snv.hg38.vcf.gz,indel=$VEP_DIR/Plugins/spliceAI/spliceai_scores.raw.indel.hg38.vcf.gz,cutoff=0.5 \
+	--output_file $PARENT_DIR_INPUT_DATA/vep_${OUTPUT_NAME}
 
-else 
+else
+	echo "ERROR: the input file has not either .txt or .vcf extension!"
 
-	echo "THE FILE HAS NOT THE EXPECTED EXTENSION!"
-	
-fi 
+fi
 
-echo " "
+echo ""
 echo "process done!"
