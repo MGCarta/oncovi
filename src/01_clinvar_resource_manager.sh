@@ -189,9 +189,57 @@ prepare_ClinVar_resources() {
 
         rm $ORIGINAL_RESOURCE_DIR/variant_summary_GRCh38.txt $CLINVAR_GRCH38_VAR_RED
     else
-        echo "Downlaoded resource from ClinVar is not present"
+        echo "Downloaded resource from ClinVar is not present"
        
     fi
+}
+
+# Prepare COSMIC underlying resources for OncoVI
+prepare_COSMIC_resources() {
+    echo -e "${BLUE}==================================================================${NC}"
+    echo -e "${BLUE}===== Prepare COSMIC underlying resource for OncoVI ==============${NC}"
+    echo ""
+
+    # Check if required resources from COSMIC exist
+    echo "Check if COSMIC required resources exist:"
+    echo ""
+    
+    REQUIRED_COSMIC_FILES=("cosmic_all_dictionary.txt.gz" "cosmic_hgvsg_dictionary.txt.gz")
+
+    REQUIRED_COSMIC_RES="yes"  # Assume everything is present
+    
+    # Check if files exist
+    for file in "${REQUIRED_COSMIC_FILES[@]}"; do
+        if [ ! -f "$RESOURCE_DIR/$file" ]; then
+            echo ""
+            echo "Required file from COSMIC is missing: $file"
+            
+	    REQUIRED_COSMIC_RES="no"
+            
+	    break  # Optional: exit loop early on first missing file
+        else
+            echo "Required file is found: $file"
+
+             # If required resources from COSMIC exist, process them
+    	     if [ "$REQUIRED_COSMIC_RES" = "yes" ]; then
+
+                 # Prepare required resources from COSMIC for OncoVI
+                 echo ""
+        	 echo "Preparing required resources from COSMIC for OncoVI"
+        	 echo ""
+        	 echo "Unzip file: $file"
+        	 echo ""
+		 bgzip -d "$RESOURCE_DIR/$file"
+                 echo "$file resource from COSMIC successfully unzipped"
+             
+            else
+                echo "Required resources from COSMIC are not present"
+                echo ""
+
+    	    fi
+
+        fi
+    done
 }
 
 # ===== MAIN PROGRAM =====
@@ -199,3 +247,4 @@ prepare_ClinVar_resources() {
 print_help
 check_ClinVar_resources
 prepare_ClinVar_resources
+prepare_COSMIC_resources
