@@ -54,28 +54,31 @@ cd oncovi/src/
 
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
+```
 
-# Deactivate the envpy310 environment
-conda deactivate
-```
-Create the conda environment:
+### Instructions to set up VEP manually
+> [!NOTE]
+Make sure to have enough space in your current directory, because cache files account for almost 30 GB (~26 GB for ```homo_sapiens_refseq_vep_111_GRCh38.tar.gz``` and ~1 GB for ```homo_sapiens_vep_111_GRCh38.tar.gz```).
+
+1. Install the conda package Ensembl Vep 
 ```rb
-# Create the conda environment for oncovi
-conda env create -n oncovi -f /path/to/OncoVIenvFile.yml
+conda install bioconda::ensembl-vep
 ```
+2. Run the installer (the latest version of the package will be automatically installed)
 ```rb
-# Activate the conda environment
-conda activate oncovi
+vep_install --NO_HTSLIB -c '../.vep' -r '../.vep/Plugins/'
 ```
-## Set up VEP
+3. Answer to the question for cache files installation with ```y```
 ```rb
-# Run the installer (v. 111) available in the conda environment
-vep_install --NO_HTSLIB -c '/path/to/.vep' -r '/path/to/.vep/Plugins/'
+Do you want to install any cache files (y/n)?
 ```
-Then:
-  * select homo_sapiens_refseq_vep_111_GRCh38.tar.gz as cache
-  * homo_sapiens_vep_111_GRCh38.tar.gz as reference genome
-  * install all Plugins
+4. Answer to the question for cache files installation with ```y```
+```rb
+Cache directory ../.vep does not exists - do you want to create it (y/n)?
+```
+5. Select ```homo_sapiens_refseq_vep_111_GRCh38.tar.gz``` by typing ```507```
+6. Select ```homo_sapiens_vep_111_GRCh38.tar.gz``` by typing ```?```
+7. Then install all Plugins.
 
 ### dbNSFP plugin
 The dbNSFP plugin is used by the the functional annotation STEP. Detailed information on how to set up the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp). The dbNSFP Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.
