@@ -180,14 +180,9 @@ prepare_ClinVar_resources() {
 	echo "Create clinvar_all_dictionary.txt"
 	echo ""
 
-	# Activate conda environment with python v. >3.10
-	source /research/storage-normal/bioinfo/miniconda3_2025/miniconda3/etc/profile.d/conda.sh
-	conda activate wsinfer061
-
-        # Run the python script to create the clinvar_all_dictionary.txt file
+	# Run the python script to create the clinvar_all_dictionary.txt file
 	python ${WORK_DIR}/create_clinvar_dict.py -i "$CLINVAR_GRCH38_VAR_RED" -r "$RESOURCE_DIR"
-        conda deactivate
-
+        
         # Remove intermediate files
         echo "Removing intermediate files from $ORIGINAL_RESOURCE_DIR"
         echo ""
