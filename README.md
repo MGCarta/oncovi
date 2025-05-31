@@ -20,7 +20,6 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 
 * conda >= 24.11.1
 * python >=3.8.8
-* python site-packages (pandas, colorama, openpyxl)
 
 OncoVI has been tested on:
 * Ensembl VEP conda package >=v.111
@@ -104,7 +103,7 @@ The spliceAI plugin is used during the the functional annotation STEP. Detailed 
 ## Test OncoVI on an exemplary set of variants
 
 #### Input data
-Both variants in text format and in variant call format (VCF) are accepted by OncoVI. No other formats are currently supported.
+Variants in both text format and in variant call format (VCF) are accepted by OncoVI. No other formats are currently supported.
 
 An exemplary input data in text format is available under:
 ```rb
@@ -118,13 +117,24 @@ An exemplary input data in VCF format is available under:
 #### Run OncoVI
 
 ```rb
-# Navigate to the directory in which the python script 02_VEP_based_pipeline.py is located
+# Move to the directory where the python script 02_VEP_based_pipeline.py is located
 cd ../src
 ```
 ```rb
 # Run OncoVI
 python 02_VEP_based_pipeline.py -i ../testdata/SOP_table_union.txt
 ```
+
+#### OncoVI output
+The current output format produced by OncoVI is a tab-delimited excel file. It includes all the variants provided in input for which the functional annotation STEP and the OncoVI prediction STEP were successful. 
+An exemplary output file is available here for inspection:
+```rb
+# ~/oncovi/exampleoutput/SOP_table_union_OncoVI_prediction.xlsx
+```
+
+The output file includes:
+* Features characterising the variants that were collected during wither the VEP annotation step (i.e., ```SYMBOL```,	```HGVSc```,	```HGVSp```,	```MANE_SELECT```,	```EXON```,	```CHROM```,	```POS```,	```REF```,	```ALT```,	```Amino_acids```,	```Existing_variation```,	```Consequence```,	```Transcript #1```,	```gnomADe_AF```,	```gnomADg_AF```) or the ClinVar interrogation step (i.e., ```ClinVar_germline```,	```ClinVar_germline_ReviewStatus```,	```ClinVar_Oncogenicity```,	```ClinVar_Oncogenicity_ReviewStatus```,	```ClinVar_Somatic_Clinical_Impact```,	```ClinVar_Somatic_ReviewStatus```,	```Clinvar_url```)
+* Features calculated by OncoVI: the variant-specific score, i.e., the sum of the points associated with the criteria triggered by OncoVI (```Points```), the oncogenicity classification associated with the variant-specific score according to the point-based system provided by Horak et al. (```Classification```), the criteria triggered by OncoVI based on the evidences collected	(```Criteria```)
 
 ## OncoVI issues
 Please, help us to improve OncoVI by describing your bug/issue in detail
