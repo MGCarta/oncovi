@@ -1,7 +1,7 @@
 # Oncogenicity Variant Interpreter (OncoVI)
 OncoVI is a fully-automated Python implementation of the [oncogenicity guidelines](https://pubmed.ncbi.nlm.nih.gov/35101336/) by Horak et al. (Genetics in Medicine, 2022). 
 
-Starting from the genomic location of the variants in human genome assembly GRCh38, OncoVI:
+Starting from the genomic location of the variants, OncoVI:
 1. performs functional annotation based on the [Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) from Ensembl;
 2. collects biological evidences from the implemented publicly available resources;
 3. classifies the oncogenicity of somatic variants, based on the point-based system for combining pieces of evidence defined by Horak et al.
@@ -24,6 +24,8 @@ OncoVI was implemented and tested on a dedicated conda enviroment running on a r
 OncoVI has been tested on:
 * Ensembl VEP conda package >=v.111
 * VEP Plugins (dbNSFP and spliceAI)
+
+OncoVI supports only variants in human genome assembly GRCh38. No other genome assemblies are currently supported.
 
 ## Get started
 Clone the GitHub repository:
@@ -95,7 +97,31 @@ rm homo_sapiens_refseq_vep_114_GRCh38.tar.gz
 ```
 
 ### dbNSFP plugin
-The dbNSFP plugin is used by the the functional annotation STEP. Detailed information on how to set up the dbNSFP plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp). The dbNSFP Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.
+The dbNSFP plugin is used by the the functional annotation STEP. VEP reports detailed information on how to set up the dbNSFP plugin [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp).
+
+About dbNSFP data files:
+
+* Download dbNSFP files from https://sites.google.com/site/jpopgen/dbNSFP.
+* There are two distinct branches of the files provided for academic and  commercial usage. Please use the appropriate files for your use case.
+* The file must be processed depending on dbNSFP release version and assembly  (see commands below).
+* The resulting file must be indexed with tabix before use by this plugin  (see commands below).
+
+For release 4.9c:
+```rb
+version=4.9c
+wget https://dbnsfp.s3.amazonaws.com/dbNSFP${version}.zip
+unzip dbNSFP${version}.zip
+zcat dbNSFP${version}_variant.chr1.gz | head -n1 > h
+```
+GRCh38/hg38 data
+```rb
+zgrep -h -v ^#chr dbNSFP${version}_variant.chr* | sort -k1,1 -k2,2n - | cat h - | bgzip -c > dbNSFP${version}_grch38.gz
+tabix -s 1 -b 2 -e 2 dbNSFP${version}_grch38.gz
+```
+Replace in the script ```vep.sh``` of this repository the full path to the dbNSFP resource:
+```rb
+--plugin dbNSFP,/path/to/dbNSFP4.9c_grch38.gz
+```
 
 ### spliceAI plugin
 The spliceAI plugin is used during the the functional annotation STEP. Detailed information on how to set up the spliceAI plugin for VEP can be found [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#spliceAI). The spliceAI Plugin must be enabled in the script ```vep.sh``` according to the Plugin instructions.  
