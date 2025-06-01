@@ -11,7 +11,7 @@ More detailed information on the resources used by OncoVI, the implementation of
 Workflow of OncoVI: 
 ![alt text][logo]
 
-[logo]: https://github.com/MGCarta/oncovi/blob/main/figures/Figure1_oncovi.PNG "Logo Title Text 2"
+[logo]: https://github.com/MGCarta/oncovi/blob/main/figures/oncovi_v2.JPG "Logo Title Text 2"
 
 ###### The figure shows the implemented criteria in OncoVI (11 and five criteria for evidence of oncogenic and benign effect respectively), the public resources utilised to assess each criterion, the points associated with each criterion and the classification of oncogenicity into one of five classes on the basis of the variant-specific score, obtained as the sum of the points associated to the criteria triggered by OncoVI for the variant: score≥10:Oncogenic (O), 6≤score≤9:Likely Oncogenic (LO), 0≤score≤5:Variant of uncertain significance (VUS), -6≤score≤-1:Likely Benign (LB), score≤-7:Benign (B). Blue: resources suggested by the Standard Operating Procedure by Horak et al.; black: resources identified by the authors of OncoVI.
 
