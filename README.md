@@ -136,7 +136,7 @@ To download the data:
 6. Below the project title, click Other datasets.
 7. Click genome_scores_v1.3 in the list of files.
 8. On the new page, click genome_scores_v1.3 again, which will expand to show the folder contents.
-9. Click on the files (from those with raw in the filename) to download from the list: ```spliceai_scores.raw.indel.hg19.vcf.gz```, ```spliceai_scores.raw.indel.hg19.vcf.gz.tbi```, ```spliceai_scores.raw.snv.hg19.vcf.gz```, ```spliceai_scores.raw.snv.hg19.vcf.gz.tbi```.
+9. Click on the files (from those with raw in the filename) to download from the list: ```spliceai_scores.raw.indel.hg38.vcf.gz```, ```spliceai_scores.raw.indel.hg38.vcf.gz.tbi```, ```spliceai_scores.raw.snv.hg38.vcf.gz```, ```spliceai_scores.raw.snv.hg38.vcf.gz.tbi```.
 
 Replace in the script ```vep.sh``` of this repository the full path to the spliceAI resources:
 ```rb
