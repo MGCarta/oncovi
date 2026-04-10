@@ -193,4 +193,4 @@ Please, visit the relative websites and verify that you are part of an academic 
 It is the user's responsibility to carefully check and comply with the licenses of the resources that need to be additionally installed to use OncoVI.
 
 ## References
-Please cite our preprint [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1) if you decide to use OncoVI.
+Please cite our paper [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1](https://doi.org/10.1016/j.jmoldx.2026.03.004 ) if you decide to use OncoVI.
