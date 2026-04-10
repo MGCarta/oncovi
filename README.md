@@ -6,7 +6,7 @@ Starting from the genomic location of the variants, OncoVI:
 2. collects biological evidences from the implemented publicly available resources;
 3. classifies the oncogenicity of somatic variants, based on the point-based system for combining pieces of evidence defined by Horak et al.
 
-More detailed information on the resources used by OncoVI, the implementation of the oncogenicity guidelines, and its application to real-world data can be found in [our pre-print](https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1).
+More detailed information on the resources used by OncoVI, the implementation of the oncogenicity guidelines, and its application to real-world data can be found in [our paper]([https://www.medrxiv.org/content/10.1101/2024.10.10.24315072v1](https://doi.org/10.1016/j.jmoldx.2026.03.004)).
 
 Workflow of OncoVI: 
 ![alt text][logo]
