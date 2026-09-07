@@ -200,7 +200,7 @@ We compared the results obtained with OncoVI version 1 (which uses OncoKB). and 
 
 Overall, the two configurations showed high agreement, with an accuracy of 0.984. The oncogenicity classification changed for 126 of 7,802 variants, while the variant-specific score changed for 162 variants. For the variants with a changed score, the score was consistently lower in the configuration without OncoKB and was associated with the loss of either the OVS1 or OM2 criterion. 
 
-The complete analysis and results are available in the following report.
+The complete analysis and results are available in the following [report](https://github.com/MGCarta/oncovi/blob/main/docs/OncoVI_without_oncoKB_MTB_public.pdf).
 
 The resources and scripts required to run OncoVI without OncoKB are provided in this repository. This would allow users to run OncoVI without requiring access to the licensed OncoKB resource. 
 
