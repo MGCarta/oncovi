@@ -61,10 +61,11 @@ OncoVI requires a set of pre-processed resources for the oncogenicity classifica
 Most resources were generated from the corresponding databases using the preparation script:
 ```resources/01_prepare_resources.py``` 
 
-and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. The original input files are not included in this repository.
+and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. 
+The original input files are not distributed with the repository and must be obtained from their respective sources.
 
-In case the user wants to collect the most updated resources, the ```01_prepare_resources.py``` can be used.
-1. Create a folder with the original resources to process:
+To prepare the resources starting from the original input files:
+1. Create a folder containing the original input files:
     ```text
     01_original_resources/
     ├── Census_....csv
