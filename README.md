@@ -55,8 +55,47 @@ pip install colorama
 pip install openpyxl
 ```
 
+## Resources
+OncoVI requires a set of pre-processed resources for the oncogenicity classification.
+
+Most resources were generated from the corresponding databases using the preparation script:
+```resources/01_prepare_resources.py``` 
+
+and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. The original input files are not included in this repository.
+
+The resources currently provided include:
+
+| Resource  | Source |
+| ------------- | ------------- |
+| mut_splice_dict.txt  | [MutSpliceDB](https://brb.nci.nih.gov/splicing/index.html)  |
+| amino_dict.txt  | Amino-acid conversion table  |
+| single_residue_dict.txt  | [Cancer Hotspots](https://www.cancerhotspots.org/#/home)  |
+| inframe_indel_dict.txt  | [Cancer Hotspots](https://www.cancerhotspots.org/#/home)  |
+| cgi_dictionary.txt  | [Cancer Genome Interpreter](https://www.cancergenomeinterpreter.org/)  |
+| domains_dictionary.txt  | [UniProt](https://www.uniprot.org/)  |
+| cosmic_hgvsg_dictionary.txt.gz  | [COSMIC](https://cancer.sanger.ac.uk/cosmic)  |
+| cosmic_all_dictionary.txt.gz  | [COSMIC](https://cancer.sanger.ac.uk/cosmic)  |
+| oncogenes_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
+| tsg_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
+| tsg_tier1.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
+| og_oncokb.csv  | [OncoKB](https://www.oncokb.org/cancer-genes)  |
+| tsg_oncokb.csv  | [OncoKB](https://www.oncokb.org/cancer-genes)  |
+| bona_fide_tsg.txt  | [COSMIC](https://cancer.sanger.ac.uk/cosmic) + [OncoKB](https://www.oncokb.org/cancer-genes)  |
+| ogs_list.txt  | [COSMIC](https://cancer.sanger.ac.uk/cosmic) + [OncoKB](https://www.oncokb.org/cancer-genes)  |
+| tsg_list.txt  | [COSMIC](https://cancer.sanger.ac.uk/cosmic) + [OncoKB](https://www.oncokb.org/cancer-genes)  |
+
+The corresponding source/version and access information for each resource are documented in ```resources/README.txt```.
+
 ### ClinVar resources
-The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resource utilised by the functional annotation STEP is handled by the script ```01_clinvar_resource_manager.sh```.
+ClinVar is handled separately because its database can be downloaded and prepared locally.
+
+The download and preparation of the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) resource utilised by the functional annotation STEP are automated by the script ```01_clinvar_resource_manager.sh```.
+
+The script downloads the ClinVar ```variant_summary.txt.gz``` file, extracts the GRCh38 variants, reduces the dataset to the fields required by OncoVI, and generates the ClinVar dictionary using:
+```src/create_clinvar_dict.py```
+
+To prepare the ClinVar resource:
+
 ```rb
 # Move to the folder where the script is located
 cd oncovi/src/
@@ -65,6 +104,8 @@ cd oncovi/src/
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
 ```
+
+The ClinVar resource is therefore not included as a ready-to-use file in the repository.
 
 ### Instructions to set up VEP manually
 > [!NOTE]
