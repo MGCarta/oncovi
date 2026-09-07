@@ -67,7 +67,8 @@ In case the user wants to collect the most updated resources, the ```01_prepare_
 ```rb
 python 01_prepare_resources.py \
     --input-dir /path/to/original_resources \
-    --output-dir /path/to/resources
+    --output-dir /path/to/resources \
+    --mutsplice-file /path/to/MutSpliceDB_BRP_2026-XX-XX.csv
 ```
 
 The resources currently provided include:
