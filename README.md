@@ -75,9 +75,9 @@ The resources currently provided include:
 | domains_dictionary.txt  | [UniProt](https://www.uniprot.org/)  |
 | cosmic_hgvsg_dictionary.txt.gz  | [COSMIC](https://cancer.sanger.ac.uk/cosmic)  |
 | cosmic_all_dictionary.txt.gz  | [COSMIC](https://cancer.sanger.ac.uk/cosmic)  |
-| oncogenes_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
-| tsg_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
-| tsg_tier1.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cosmic](https://cancer.sanger.ac.uk/cmc/home )  |
+| oncogenes_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cmc/home) |
+| tsg_cgc.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cmc/home) |
+| tsg_tier1.csv  | [COSMIC Cancer Gene Census](https://cancer.sanger.ac.uk/cmc/home) |
 | og_oncokb.csv  | [OncoKB](https://www.oncokb.org/cancer-genes)  |
 | tsg_oncokb.csv  | [OncoKB](https://www.oncokb.org/cancer-genes)  |
 | bona_fide_tsg.txt  | [COSMIC](https://cancer.sanger.ac.uk/cosmic) + [OncoKB](https://www.oncokb.org/cancer-genes)  |
