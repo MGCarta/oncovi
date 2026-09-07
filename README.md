@@ -63,6 +63,13 @@ Most resources were generated from the corresponding databases using the prepara
 
 and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. The original input files are not included in this repository.
 
+In case the user wants to collect the most updated resources, the ```01_prepare_resources.py``` can be used:
+```rb
+python 01_prepare_resources.py \
+    --input-dir /path/to/original_resources \
+    --output-dir /path/to/resources
+```
+
 The resources currently provided include:
 
 | Resource  | Source |
