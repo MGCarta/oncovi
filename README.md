@@ -193,7 +193,7 @@ Please, visit the relative websites and verify that you are part of an academic 
 It is the user's responsibility to carefully check and comply with the licenses of the resources that need to be additionally installed to use OncoVI.
 
 ## Using OncoVI without OncoKB
-OncoVI can be used without the OncoKB resource. In this configuration, the role of TSGs and OGs is defined using COSMIC only and the other resources available to OncoVI.
+OncoVI can be used without the OncoKB resource. In this configuration, the role of tumour suppressor genes and oncogenes is defined using COSMIC only and the other resources available to OncoVI.
 
 We evaluated this configuration using the 7,802 somatic variants from the Molecular Tumour Board (MTB) data set, comprising variants detected in more than 500 tumours analysed with the Illumina TruSight Oncology 500 (TSO500) gene panel.
 We compared the results obtained with OncoVI version 1 (which uses OncoKB). and version 2, which does not use OncoKB. 
