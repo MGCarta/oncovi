@@ -192,5 +192,17 @@ For these reasons, OncoVI is intended for research purposes only and its use out
 Please, visit the relative websites and verify that you are part of an academic institution to freely use OncoVI. 
 It is the user's responsibility to carefully check and comply with the licenses of the resources that need to be additionally installed to use OncoVI.
 
+## Using OncoVI without OncoKB
+OncoVI can be used without the OncoKB resource. In this configuration, the role of TSGs and OGs is defined using COSMIC only and the other resources available to OncoVI.
+
+We evaluated this configuration using the 7,802 somatic variants from the Molecular Tumour Board (MTB) data set, comprising variants detected in more than 500 tumours analysed with the Illumina TruSight Oncology 500 (TSO500) gene panel.
+We compared the results obtained with OncoVI version 1 (which uses OncoKB). and version 2, which does not use OncoKB. 
+
+Overall, the two configurations showed high agreement, with an accuracy of 0.984. The oncogenicity classification changed for 126 of 7,802 variants, while the variant-specific score changed for 162 variants. For the variants with a changed score, the score was consistently lower in the configuration without OncoKB and was associated with the loss of either the OVS1 or OM2 criterion. 
+
+The complete analysis and results are available in the following report.
+
+The resources and scripts required to run OncoVI without OncoKB are provided in this repository. This would allow users to run OncoVI without requiring access to the licensed OncoKB resource. 
+
 ## References
 Please cite our paper [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://doi.org/10.1016/j.jmoldx.2026.03.004) if you decide to use OncoVI.
