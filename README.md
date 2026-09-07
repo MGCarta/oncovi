@@ -63,12 +63,21 @@ Most resources were generated from the corresponding databases using the prepara
 
 and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. The original input files are not included in this repository.
 
-In case the user wants to collect the most updated resources, the ```01_prepare_resources.py``` can be used:
+In case the user wants to collect the most updated resources, the ```01_prepare_resources.py``` can be used.
+1. Create a folder with the original resources to process:
+    ```text
+    01_original_resources/
+    ├── Census_....csv
+    ├── cancerGeneList.tsv
+    ├── MutSpliceDB_....csv
+    ├── amino_conversion.txt
+    ├── ...
+    ```
+2. Run the script:
 ```rb
 python 01_prepare_resources.py \
     --input-dir /path/to/original_resources \
-    --output-dir /path/to/resources \
-    --mutsplice-file /path/to/MutSpliceDB_BRP_2026-XX-XX.csv
+    --output-dir /path/to/resources
 ```
 
 The resources currently provided include:
