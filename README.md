@@ -79,7 +79,7 @@ python 01_prepare_resources.py \
     --output-dir /path/to/resources
 ```
 
-The ```resources/``` directory of this repository contains ready-to-use resources generated on XX/2024.
+The ```resources/``` directory of this repository contains ready-to-use resources generated on 05/2025.
 
 The resources currently provided include:
 
