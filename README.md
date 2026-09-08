@@ -262,7 +262,7 @@ Please cite our paper [Oncogenicity Variant Interpreter (OncoVI): oncogenicity g
 
 OncoVI has also been used in other research studies and publications::
 
-* Prevalence and characterization of germline RAS pathway variants in children with chronic myeloid leukemia](https://www.nature.com/articles/s41375-026-02952-z) — Ghete et al., Leukemia, 2026
+* [Prevalence and characterization of germline RAS pathway variants in children with chronic myeloid leukemia](https://www.nature.com/articles/s41375-026-02952-z) — Ghete et al., Leukemia, 2026
 * [Landscape of Actionable Genetic Alterations in Advanced Urothelial Carcinoma: High Prevalence but Limited Clinical Use](https://www.sciencedirect.com/science/article/pii/S2588931126001902?via%3Dihub) — Carta et al., European Urology Oncology, 2026
 
 
