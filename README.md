@@ -247,7 +247,7 @@ The following [report](https://github.com/MGCarta/oncovi/blob/main/docs/OncoVI_w
 The resources and scripts required to run OncoVI without OncoKB are provided in this repository. This would allow users to run OncoVI without requiring access to the licensed OncoKB resource. 
 
 ## OncoVI issues
-Please, help us to improve OncoVI by describing your bug/issue in detail
+Please, help us to improve OncoVI by describing your bug/issue in detail.
 
 ## License
 The MIT license file applies to only the scripts within this repository.
@@ -260,7 +260,7 @@ It is the user's responsibility to carefully check and comply with the licenses 
 ## References
 Please cite our paper [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://doi.org/10.1016/j.jmoldx.2026.03.004) if you decide to use OncoVI.
 
-OncoVI has also been used in other research studies and publications::
+OncoVI has also been used in other research studies and publications:
 
 * [Prevalence and characterization of germline RAS pathway variants in children with chronic myeloid leukemia](https://www.nature.com/articles/s41375-026-02952-z) — Ghete et al., Leukemia, 2026
 * [Landscape of Actionable Genetic Alterations in Advanced Urothelial Carcinoma: High Prevalence but Limited Clinical Use](https://www.sciencedirect.com/science/article/pii/S2588931126001902?via%3Dihub) — Carta et al., European Urology Oncology, 2026
