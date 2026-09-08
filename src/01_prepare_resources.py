@@ -1,30 +1,53 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Sep 11 10:44:29 2024
+Created on Mon Sep  7 11:43:34 2026
 
 @author: cartama
 
     The script preparares resources used in OncoVI. 
+    
+    Usage:
+        python 01_prepare_resources.py \
+            --input-dir /path/to/original_resources \
+            --output-dir /path/to/resources 
+            
     
 """
 
 # --------------------------------------------------------------------------- #
 
 # Libraries
+import argparse
 import pandas as pd
 import os  
 import json
 
 # --------------------------------------------------------------------------- #
 
-# Base directory
-base_dir = "V:/gruppen/AG_Bioinfo/members/Carta/PhD_Project/Guidelines_implementation/Preparation_for_submission"
+# Starting from the base directory generate the path to the folder for the
+# original resources and create the path to the final resources
+parser = argparse.ArgumentParser(
+    description="Prepare OncoVI resources from original database files."
+)
 
-# Directory for original resources (i.e., resources not modified)
-orig_resdir = os.path.join(base_dir, "02_original_resources")
+parser.add_argument(
+    "--input-dir",
+    required=True,
+    help="Directory containing the original resource files."
+)
 
-# Directory for final resources 
-final_resdir = os.path.join(base_dir, "03_resources")
+parser.add_argument(
+    "--output-dir",
+    required=True,
+    help="Directory where the prepared resources will be saved."
+)
+
+args = parser.parse_args()
+
+orig_resdir = args.input_dir
+final_resdir = args.output_dir
+
+os.makedirs(final_resdir, exist_ok=True)
 
 
 # --------------------------------------------------------------------------- #
@@ -32,10 +55,20 @@ final_resdir = os.path.join(base_dir, "03_resources")
 
 # Read in the cancer gene census (CGC) csv file in a dataframe 
 # (The dataframe was downloaded as .csv format from here:
-#  https://cancer.sanger.ac.uk/census . Accessed 1 May 2024.)
+#  https://cancer.sanger.ac.uk/census .)
 
-cgc_df = pd.read_csv(os.path.join(orig_resdir,"Census_allWed_May_1_17_27_56_2024.csv"),
-                     sep=',')
+cgc_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("Census_all_") and f.endswith(".csv")]
+
+if len(cgc_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one Cancer Gene Census CSV file in the input directory.")
+
+cgc_file = os.path.join(orig_resdir, cgc_files[0])
+
+
+cgc_df = pd.read_csv(os.path.join(orig_resdir, cgc_file), sep=',')
 
 # Select genes with "Tier" == 1
 
@@ -57,10 +90,19 @@ tsg_tier1.to_csv(os.path.join(final_resdir,"tsg_tier1.csv"), sep='\t', index=Fal
 
 # Read in the OncoKB Cancer Genes tsv file in a dataframe 
 # (The dataframe was downloaded as .tsv format from here:
-#  https://www.oncokb.org/cancer-genes . Accessed 29 April 2024.)
+#  https://www.oncokb.org/cancer-genes .)
 
-cancer_genes_oncokb_df = pd.read_csv(os.path.join(orig_resdir,"cancerGeneList.tsv"),
-                                     sep='\t')
+cancer_genes_oncokb_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("cancerGeneList") and f.endswith(".tsv")]
+
+if len(cancer_genes_oncokb_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one OncoKB Cancer Gene List TSV file in the input directory.")
+
+cancer_genes_oncokb_file = os.path.join(orig_resdir, cancer_genes_oncokb_files[0])
+
+cancer_genes_oncokb_df = pd.read_csv(os.path.join(orig_resdir,cancer_genes_oncokb_file), sep='\t')
 
 # Select genes with "Is Tumor Suppressor Gene" equal to "Yes"
 
@@ -177,8 +219,7 @@ with open(os.path.join(final_resdir,"tsg_list.txt"), 'w') as file:
 
 # Read in a reduction of the COSMIC Census Genes Mutations txt file in a dataframe 
 # (The dataframe was originally downloaded as .tar format from here:
-#  https://cancer.sanger.ac.uk/cosmic/download/cosmic/v99/mutantcensus .
-#  Accessed 09 April 2024.)
+#  https://cancer.sanger.ac.uk/cosmic/download/cosmic/v99/mutantcensus .)
 
 # The original file contains "All coding mutations in genes listed in the Cancer
 # Gene Census.
@@ -196,7 +237,17 @@ with open(os.path.join(final_resdir,"tsg_list.txt"), 'w') as file:
 # - MUTATION_AA
 # - HGVSG
 
-cosmic_df_dir = os.path.join(orig_resdir, "Cosmic_MutantCensus_v99_GRCh38_red.txt")
+cosmic_df_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("Cosmic_MutantCensus_") and f.endswith(".txt")]
+
+if len(cosmic_df_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one COSMIC Mutant Gene Census TXT file in the input directory.")
+
+cosmic_df_file = os.path.join(orig_resdir, cosmic_df_files[0])
+
+cosmic_df_dir = os.path.join(orig_resdir, cosmic_df_file)
 
 # Open the file as text file
 file_cosmic = open(cosmic_df_dir, "r")
@@ -249,8 +300,7 @@ with open(os.path.join(final_resdir,"cosmic_hgvsg_dictionary.txt"), 'w') as fp:
 
 # Read in a reduction of the COSMIC Cancer Mutation Census tsv file in a dataframe 
 # (The dataframe was originally downloaded as .tar format from here:
-#  https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v99/alldata-cmc .
-#  Accessed 07 May 2024.)
+#  https://cancer.sanger.ac.uk/cosmic/download/cancer-mutation-census/v99/alldata-cmc .)
 
 # The original file contains "all coding somatic mutations collected by COSMIC"
 
@@ -270,7 +320,17 @@ with open(os.path.join(final_resdir,"cosmic_hgvsg_dictionary.txt"), 'w') as fp:
 # - Mutation genome position GRCh38
 # - COSMIC_SAMPLE_MUTATED
 
-cosmic_all_data_dir = os.path.join(orig_resdir, "CancerMutationCensus_All_v99_GRCh38_red.tsv")
+cosmic_all_data_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("CancerMutationCensus_All_") and f.endswith(".tsv")]
+
+if len(cosmic_all_data_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one COSMIC Cancer Mutation Census TSV file in the input directory.")
+
+cosmic_all_data_file = os.path.join(orig_resdir, cosmic_all_data_files[0])
+
+cosmic_all_data_dir = os.path.join(orig_resdir, cosmic_all_data_file)
 
 # Open the file as text file
 file_cosmic_all_data = open(cosmic_all_data_dir, "r")
@@ -449,11 +509,20 @@ with open(os.path.join(final_resdir,"cosmic_all_dictionary.txt"), 'w') as fp:
 
 # Read in the MutSpliceDB csv file in a dataframe 
 # (The dataframe was downloaded as .csv format from here:
-#  https://brb.nci.nih.gov/cgi-bin/splicing/splicing_main.cgi . 
-#  Accessed 06 February 2024.)
+#  https://brb.nci.nih.gov/cgi-bin/splicing/splicing_main.cgi)
 
-mut_splice_db = pd.read_csv(os.path.join(orig_resdir, "MutSpliceDB_BRP_2024-02-06.csv"),
-                            sep=',')
+mutsplice_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("MutSpliceDB_") and f.endswith(".csv")]
+
+if len(mutsplice_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one MutSpliceDB CSV file in the input directory."
+    )
+
+mutsplice_file = os.path.join(orig_resdir, mutsplice_files[0])
+
+mut_splice_db = pd.read_csv(mutsplice_file, sep=",")
 
 # Rename columns
 mut_splice_db = mut_splice_db.rename(columns={'Gene Symbol': 'Symbol',
@@ -520,10 +589,20 @@ with open(os.path.join(final_resdir,"amino_dict.txt"), 'w') as fp:
 
 # Read in the cancerhotspots csv file in a dataframe 
 # (The dataframe was downloaded as .txt format from here:
-#  https://www.cancerhotspots.org/#/home . 
-#  Accessed 26 September 2023.)
+#  https://www.cancerhotspots.org/#/home .)
 
-cancerhotspots = pd.read_csv(os.path.join(orig_resdir, "hotspots.txt"), sep='\t')
+cancerhotspots_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("hotspots") and f.endswith(".txt")]
+
+if len(cancerhotspots_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one cancerhotspots TXT file in the input directory."
+    )
+
+cancerhotspots_file = os.path.join(orig_resdir, cancerhotspots_files[0])
+
+cancerhotspots = pd.read_csv(os.path.join(orig_resdir, cancerhotspots_file), sep='\t')
 
 # Extract single residues
 single_residue = cancerhotspots[cancerhotspots['Type'] == 'single residue']
@@ -659,10 +738,20 @@ with open(os.path.join(final_resdir,"inframe_indel_dict.txt"), 'w') as fp:
 
 # Read in the Cancer Genome Interpreter tsv file in a dataframe 
 # (The dataframe was downloaded as .txt format from here:
-#  https://www.cancergenomeinterpreter.org/mutations . 
-#  Accessed 01 February 2024.)
+#  https://www.cancergenomeinterpreter.org/mutations .)
 
-CGI_db = pd.read_csv(os.path.join(orig_resdir,"catalog_of_validated_oncogenic_mutations20240201.tsv"), 
+CGI_files = [
+    f for f in os.listdir(orig_resdir)
+    if f.startswith("catalog_of_validated_oncogenic_mutations") and f.endswith(".tsv")]
+
+if len(CGI_files) != 1:
+    raise RuntimeError(
+        "Expected exactly one Cancer Genome Interpreter TSV file in the input directory."
+    )
+
+CGI_file = os.path.join(orig_resdir, CGI_files[0])
+
+CGI_db = pd.read_csv(os.path.join(orig_resdir, CGI_files), 
                      sep='\t')
 
 # Extract rows with more entities in the gdna column, separated by 
@@ -788,3 +877,4 @@ for index, row in CGI_final.iterrows():
 # Saving the dictionary as txt file
 with open(os.path.join(final_resdir,"cgi_dictionary.txt"), 'w') as fp:
      json.dump(cgi_dict, fp)
+
