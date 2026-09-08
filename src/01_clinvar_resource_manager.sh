@@ -88,7 +88,7 @@ check_ClinVar_resources() {
     echo ""
     echo "Check if ClinVar resource exists:"
 
-    REQUIRED_FILE=("clinvar_all_dictionary.txt")
+    REQUIRED_FILE=("clinvar_all_dictionary.json")
 
     CLINVAR_RES="yes"  # Assume everything is present
     
@@ -177,7 +177,7 @@ prepare_ClinVar_resources() {
 
 	CLINVAR_GRCH38_VAR_RED="$ORIGINAL_RESOURCE_DIR/variant_summary_GRCh38_red.txt"
 
-	echo "Create clinvar_all_dictionary.txt"
+	echo "Create clinvar_all_dictionary.json"
 	echo ""
 
 	# Run the python script to create the clinvar_all_dictionary.txt file
