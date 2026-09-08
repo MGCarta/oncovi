@@ -58,13 +58,11 @@ pip install openpyxl
 ## Resources
 OncoVI requires a set of pre-processed resources for the oncogenicity classification.
 
-Most resources were generated from the corresponding databases using the preparation script:
+Most resources can be generated from the corresponding databases using the preparation script:
 ```resources/01_prepare_resources.py``` 
 
-and are distributed as ready-to-use resources in the ```resources/``` directory of this repository. 
-The original input files are not distributed with the repository and must be obtained from their respective sources.
+First, you need to obtain from the respective sources the original input files. Then, in order to prepare the resources starting from these input files:
 
-To prepare the resources starting from the original input files:
 1. Create a folder containing the original input files:
     ```text
     01_original_resources/
@@ -81,9 +79,11 @@ python 01_prepare_resources.py \
     --output-dir /path/to/resources
 ```
 
+The ```resources/``` directory of this repository contains ready-to-use resources generated on XX/2024.
+
 The resources currently provided include:
 
-| Resource  | Source |
+| Resource  | Source for the original input files |
 | ------------- | ------------- |
 | mut_splice_dict.txt  | [MutSpliceDB](https://brb.nci.nih.gov/splicing/index.html)  |
 | amino_dict.txt  | Amino-acid conversion table  |
@@ -122,8 +122,6 @@ cd oncovi/src/
 # Run the bash script
 bash 01_clinvar_resource_manager.sh
 ```
-
-The ClinVar resource is therefore not included as a ready-to-use file in the repository.
 
 ### Instructions to set up VEP manually
 > [!NOTE]
@@ -239,9 +237,17 @@ The output file includes:
   
 * Features calculated by OncoVI: the variant-specific score, i.e., the sum of the points associated with the criteria triggered by OncoVI (```Points```), the oncogenicity classification associated with the variant-specific score according to the point-based system provided by Horak et al. (```Classification```), the criteria triggered by OncoVI based on the evidences collected	(```Criteria```)
 
+## OncoVI_mod: OncoVI not relying on OncoKB
+In this repository we provide OncoVI_mod, a version of OncoVI that does not rely on OncoKB as part of its resources.
+
+In OncoVI_mod, the role of tumour suppressor genes and oncogenes is defined using COSMIC only and the other resources available to OncoVI.
+
+The following [report](https://github.com/MGCarta/oncovi/blob/main/docs/OncoVI_without_oncoKB_MTB_public.pdf) contains a comparison of the results obtained with OncoVI and those with OncoVI_mod on the "Molecular Tumour Board data set" described in our [publication](https://doi.org/10.1016/j.jmoldx.2026.03.004).
+
+The resources and scripts required to run OncoVI without OncoKB are provided in this repository. This would allow users to run OncoVI without requiring access to the licensed OncoKB resource. 
+
 ## OncoVI issues
 Please, help us to improve OncoVI by describing your bug/issue in detail
-
 
 ## License
 The MIT license file applies to only the scripts within this repository.
@@ -251,17 +257,12 @@ For these reasons, OncoVI is intended for research purposes only and its use out
 Please, visit the relative websites and verify that you are part of an academic institution to freely use OncoVI. 
 It is the user's responsibility to carefully check and comply with the licenses of the resources that need to be additionally installed to use OncoVI.
 
-## Using OncoVI without OncoKB
-OncoVI can be used without the OncoKB resource. In this configuration, the role of tumour suppressor genes and oncogenes is defined using COSMIC only and the other resources available to OncoVI.
-
-We evaluated this configuration using the 7,802 somatic variants from the Molecular Tumour Board (MTB) data set, comprising variants detected in more than 500 tumours analysed with the Illumina TruSight Oncology 500 (TSO500) gene panel.
-We compared the results obtained with OncoVI version 1 (which uses OncoKB). and version 2, which does not use OncoKB. 
-
-Overall, the two configurations showed high agreement, with an accuracy of 0.984. The oncogenicity classification changed for 126 of 7,802 variants, while the variant-specific score changed for 162 variants. For the variants with a changed score, the score was consistently lower in the configuration without OncoKB and was associated with the loss of either the OVS1 or OM2 criterion. 
-
-The complete analysis and results are available in the following [report](https://github.com/MGCarta/oncovi/blob/main/docs/OncoVI_without_oncoKB_MTB_public.pdf).
-
-The resources and scripts required to run OncoVI without OncoKB are provided in this repository. This would allow users to run OncoVI without requiring access to the licensed OncoKB resource. 
-
 ## References
 Please cite our paper [Oncogenicity Variant Interpreter (OncoVI): oncogenicity guidelines implementation to support somatic variants interpretation in precision oncology](https://doi.org/10.1016/j.jmoldx.2026.03.004) if you decide to use OncoVI.
+
+OncoVI has also been used in other research studies and publications::
+
+* Prevalence and characterization of germline RAS pathway variants in children with chronic myeloid leukemia](https://www.nature.com/articles/s41375-026-02952-z) — Ghete et al., Leukemia, 2026
+* [Landscape of Actionable Genetic Alterations in Advanced Urothelial Carcinoma: High Prevalence but Limited Clinical Use](https://www.sciencedirect.com/science/article/pii/S2588931126001902?via%3Dihub) — Carta et al., European Urology Oncology, 2026
+
+
